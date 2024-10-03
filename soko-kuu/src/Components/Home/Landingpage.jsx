@@ -4,10 +4,10 @@ import Logo from '../../assets/soko-kuu.png';
 
 const Landingpage = () => {
   return (
-    <div className="bg-blue-400 my-4 rounded-md flex flex-col lg:flex-row w-full lg:h-80 p-4 lg:p-0">
+    <div className="bg-blue-400 my-4 rounded-md flex flex-col lg:flex-row w-full h-[60vh] lg:h-80 p-4 lg:p-0">
       
       {/* Top Categories Section */}
-      <div className="lg:w-1/4 w-full text-center mb-6 lg:mb-0">
+      <div className="lg:w-1/4 w-full hidden md:block  text-center mb-6 lg:mb-0">
         <h1 className="text-white font-semibold text-lg lg:text-xl mt-4 lg:mt-6">Top Categories</h1>
         <div className="flex justify-center">
           <div className="bg-white m-3 rounded-lg p-2 w-48">
@@ -31,7 +31,7 @@ const Landingpage = () => {
             <button className="bg-blue-400 p-1 mt-3 lg:mt-5 rounded text-white font-medium">Shop now</button>
           </div>
           <div className="lg:w-1/2 flex justify-center mt-2 lg:mt-0">
-            <img src={Image} alt="Watch" className="w-full  lg:w-72 h-40 lg:h-64 object-fill  rounded-lg" />
+            <img src={Image} alt="Watch" className="w-full  lg:w-72 h-48 lg:h-64 object-fill  rounded-lg" />
           </div>
         </div>
         {/* Dots for the slider (for future use) */}
@@ -43,7 +43,7 @@ const Landingpage = () => {
       </div>
 
       {/* Top Sellers Section */}
-      <div className="lg:w-1/4 w-full text-center mt-6 lg:mt-0">
+      <div className="lg:w-1/4 w-full hidden md:block text-center mt-6 lg:mt-0">
         <h1 className="text-white font-semibold text-lg lg:text-xl mt-4 lg:mt-6">Top Sellers</h1>
         <div className="flex justify-center">
           <div className="bg-white m-3 rounded-lg p-2 w-48">

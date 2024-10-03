@@ -4,6 +4,8 @@ import Categories from '../Categories/Categories'
 import Services from '../Services/Services'
 import Recommended from './Recommended'
 import ServiceBanner from '../Services/ServiceBanner'
+import Sellers from '../Business/Sellers'
+import MostViewed from './MostViewed'
 
 const Home = () => {
   return (
@@ -13,6 +15,8 @@ const Home = () => {
         <Services />
         <Recommended />
         <ServiceBanner />
+        <Sellers />
+        <MostViewed />
     </div>
   )
 }

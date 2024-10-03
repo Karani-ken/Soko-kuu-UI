@@ -16,7 +16,7 @@ const Categories = () => {
         <div className='h-80 mb-4 bg-white  rounded' >
             <h2 className='text-center text-xl font-bold'>Product Categories</h2>
             <div className='flex justify-end my-1'>
-                <button className='p-1 bg-blue-400 text-white rounded'>See all</button>
+                <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
             </div>
             <div className="w-full overflow-x-auto bg-sky-100 rounded-md">
                 <div className="flex justify-around p-3">

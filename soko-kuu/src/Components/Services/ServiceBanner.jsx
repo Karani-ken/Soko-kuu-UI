@@ -2,7 +2,7 @@ import React from 'react'
 import BannerImage from '../../assets/salon.jpg'
 const ServiceBanner = () => {
   return (
-    <div className='bg-white py-3  mb-4 rounded-lg'>
+    <div className='bg-white py-3 h-[80vh] lg:h-80 mb-4 rounded-lg'>
         <h1 className='text-center text-xl font-bold my-3'>Recommended Services</h1>
         <div className='lg:flex justify-center text-white bg-black rounded-md h-72 '>
             <div className='text-center p-5 lg:w-1/2'>
