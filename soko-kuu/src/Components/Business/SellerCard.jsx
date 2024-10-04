@@ -1,9 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/soko-kuu.png';
 const SellerCard = ({ name, banner }) => {
+  const navigate = useNavigate()
+  const handleNavigate = () => {
+    navigate('/store')
+  }
   return (
     <div
-      className="min-w-52 h-56 mx-5 relative rounded-lg overflow-hidden p-2 bg-gray-50"
+    onClick={handleNavigate}
+      className="min-w-52 h-56 mx-5 cursor-pointer relative rounded-lg overflow-hidden p-2 bg-gray-50"
       style={{
         backgroundImage: `url(${banner || Logo})`,
         backgroundSize: 'cover',

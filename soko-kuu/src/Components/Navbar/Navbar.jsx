@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../../assets/soko-kuu.png';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -14,7 +15,7 @@ const Navbar = () => {
       {/* Navbar */}
       <nav className='mt-1 flex flex-col sm:flex-row justify-between items-center border rounded p-2 shadow-sm'>
         {/* Logo */}
-        <img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0' />
+     <Link to='/'><img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0' /></Link>   
 
         {/* Search bar */}
         <div className='flex w-full sm:w-auto items-center space-x-2 mb-2 sm:mb-0'>

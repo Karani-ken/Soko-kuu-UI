@@ -12,11 +12,11 @@ const CategoryPage = () => {
           backgroundPosition: 'center',
         }}
       >
-        <h1 className='text-center text-white bg-blue-900 bg-opacity-80 rounded-sm lg:mx-96 my-16 font-bold p-3'>Consumer Electronics</h1>
+        <h1 className='text-center text-white bg-blue-900  rounded-sm lg:mx-96 my-8 font-bold p-3'>Consumer Electronics</h1>
 
       </div>
-      <div className='bg-slate-100 bg-opacity-40 border lg:mx-28 mt-[-10%] rounded-md p-3'>
-        <h1 className='text-center text-white font-bold mb-4 bg-teal-900 lg:mx-80 rounded'>Top Products</h1>
+      <div className='bg-slate-100 bg-opacity-80 border lg:mx-28 mt-[-10%] rounded-md p-3'>
+        <h1 className='text-center text-black font-bold mb-4  lg:mx-80 rounded'>Top Products</h1>
         <div className='flex w-full justify-around overflow-x-auto py-2'>
           <ProductCard />
           <ProductCard />
