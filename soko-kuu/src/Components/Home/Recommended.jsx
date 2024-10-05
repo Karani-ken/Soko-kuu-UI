@@ -1,12 +1,12 @@
 import React from 'react'
 import ProductCard from '../Products/ProductCard'
-
+import { Link } from 'react-router-dom'
 const Recommended = () => {
   return (
     <div className='bg-white text-center my-10 py-4'>
         <h1 className='text-center font-bold  text-xl'>Recommended Products </h1>
             <div className='flex justify-end my-1'>
-                <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
+            <Link to='/all-products'><button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button></Link>
             </div>
         <div className='bg-blue-900 p-5 w-full rounded flex justify-around overflow-x-scroll h-72'>
             <ProductCard />

@@ -1,5 +1,6 @@
 import React from 'react'
 import BannerImage from '../../assets/salon.jpg'
+import { Link } from 'react-router-dom'
 const ServiceBanner = () => {
   return (
     <div className='bg-white py-3 h-[80vh] lg:h-80 mb-4 rounded-lg'>
@@ -14,7 +15,7 @@ const ServiceBanner = () => {
                       doloribus pariatur, at nobis dolores, nemo rem.
                 </p>
 
-                <button className='bg-white text-black p-2 md:mt-10 font-semibold rounded-3xl'>Visit Section</button>
+               <Link to='/servicepage' ><button className='bg-white hover:bg-blue-500 text-black p-2 md:mt-10 font-semibold rounded-3xl'>Visit Section</button></Link> 
             </div>
             <div>
                 <img src={BannerImage} alt="" className='h-72' />

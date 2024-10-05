@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from '../../assets/furniture.jpeg'
 import ProductCard from './ProductCard'
+import { Link } from 'react-router-dom'
 const ProductPage = () => {
     return (
         <div className='min-h-screen mt-5'>
@@ -32,7 +33,7 @@ const ProductPage = () => {
             <div className='bg-white mb-4'>
                 <h1 className='text-center font-bold my-2'>Similar Products</h1>
                 <div className='flex justify-end my-1'>
-                    <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
+                <Link to='/all-products'><button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button></Link>    
                 </div>
                 <div className='flex w-full bg-slate-200 justify-around overflow-x-auto py-2 rounded-md'>
                     <ProductCard />

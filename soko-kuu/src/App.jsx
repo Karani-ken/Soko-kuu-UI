@@ -6,6 +6,8 @@ import Footer from './Components/Footer/Footer'
 import CategoryPage from './Components/Categories/CategoryPage'
 import ProductPage from './Components/Products/ProductPage'
 import Store from './Components/Business/Store'
+import ServicePage from './Components/Services/ServicePage'
+import AllProducts from './Components/Products/AllProducts'
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path='/category' element={<CategoryPage />} />
           <Route path='/productpage' element={<ProductPage />} />
           <Route path='/store' element={<Store />} />
+          <Route path='/servicepage' element={<ServicePage />} />
+          <Route path='/all-products' element={<AllProducts />} />
         </Routes>
         <Footer />
       </div>
