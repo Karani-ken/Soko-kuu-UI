@@ -15,12 +15,12 @@ function App() {
 
   return (
     <Router>
-      <div className='md:mx-32'>
+      <div className='lg:mx-32'>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/category' element={<CategoryPage />} />
-          <Route path='/productpage' element={<ProductPage />} />
+          <Route path='/products/:id' element={<ProductPage />} />
           <Route path='/store' element={<Store />} />
           <Route path='/servicepage' element={<ServicePage />} />
           <Route path='/all-products' element={<AllProducts />} />
