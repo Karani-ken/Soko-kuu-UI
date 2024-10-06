@@ -108,6 +108,14 @@ const Landingpage = () => {
     navigate(`/products/${id}`)
   }
 
+  const navigateToCategory = (name,banner) => {
+    navigate(`/category/${name}`, { state: { banner: banner || Logo } }); // Passing the banner as state
+  };
+
+  const navigateToStore = (id) => {
+    navigate(`/store/${id}`)
+  }
+
   return (
     <div className="bg-blue-500 my-4 rounded-md flex flex-col md:flex-row lg:flex-row w-full h-[70vh] md:h-[60vh] lg:h-96 p-4 lg:p-0">
 
@@ -131,7 +139,7 @@ const Landingpage = () => {
               </div>
               <div className="bg-black bg-opacity-50 p-2 rounded-lg">
                 <h1 className="font-medium my-2 text-sm lg:text-base">{currentCategory.category_name}</h1>
-                <button className="text-white bg-blue-400 p-1 rounded-lg text-sm lg:text-base">View Products</button>
+                <button className="text-white bg-blue-400 p-1 rounded-lg text-sm lg:text-base" onClick={() => navigateToCategory(currentCategory.category_name,currentCategory.banner)}>View Products</button>
               </div>
             </div>
 
@@ -144,9 +152,9 @@ const Landingpage = () => {
       {/* Middle Section: Product Highlight */}
       <div className="lg:w-2/4 w-full min-h-72">
         <h1 className="text-center text-white text-xl font-bold">Exclusive Products</h1>
-        <div className="md:flex lg:flex justify-center">
-          <div className="text-center lg:text-left flex flex-col md:flex-row lg:flex-row justify-between bg-white m-4 rounded-lg shadow-md w-full">
-            <div className="lg:w-1/2 md:w-1/2 p-4">
+        <div className=" md:flex lg:flex justify-center">
+          <div className="text-center lg:text-left flex flex-col md:flex-row lg:flex-row justify-between bg-white  rounded-lg shadow-md w-full">
+            <div className="lg:w-1/2 w-full md:w-1/2 p-2">
               <LuBadgeCheck className="text-yellow-500 text-3xl" />
               {currentProduct ? (
                 <>
@@ -194,7 +202,7 @@ const Landingpage = () => {
               </div>
               <div className="bg-black bg-opacity-50 p-2 rounded-lg">
                 <h1 className="font-medium my-2 text-sm lg:text-base">{currentSeller.name}</h1>
-                <button className="text-white bg-blue-400 p-1 rounded-lg text-sm lg:text-base">Visit Store</button>
+                <button className="text-white bg-blue-400 p-1 rounded-lg text-sm lg:text-base" onClick={() => navigateToStore(currentSeller.id)}>Visit Store</button>
               </div>
             </div>
 

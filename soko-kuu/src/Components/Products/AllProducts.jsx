@@ -1,27 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import ProductCard from './ProductCard';
 
 const AllProducts = () => {
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [products, setProducts] = useState([
-    // Dummy products for demo purposes. Replace this with actual data.
-    { id: 1, name: 'Product A', price: 50 },
-    { id: 2, name: 'Product B', price: 100 },
-    { id: 3, name: 'Product C', price: 25 },
-    { id: 4, name: 'Product D', price: 75 },
-    { id: 5, name: 'Product E', price: 30 },
-    { id: 6, name: 'Product F', price: 60 },
-  ]);
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Store original products
+  const [loading, setLoading] = useState(true);
+
+  // Function to fetch products from the backend API
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('https://api.kelynemedia.co.ke/products/all'); // Replace with your actual API endpoint
+      setProducts(response.data); // Set initial products for display
+      setAllProducts(response.data); // Store all products for filtering
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false); // Set loading to false once data is fetched
+    }
+  };
+
+  // Fetch products on component mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   // Function to sort products alphabetically A-Z or Z-A
   const handleSortOrder = (order) => {
     const sortedProducts = [...products].sort((a, b) => {
+      const nameA = a.product_name.toLowerCase();
+      const nameB = b.product_name.toLowerCase();
       if (order === 'A-Z') {
-        return a.name.localeCompare(b.name);
+        return nameA.localeCompare(nameB);
       } else if (order === 'Z-A') {
-        return b.name.localeCompare(a.name);
+        return nameB.localeCompare(nameA);
       }
       return 0;
     });
@@ -31,18 +46,18 @@ const AllProducts = () => {
 
   // Function to filter products by price range
   const handlePriceFilter = () => {
-    const filteredProducts = products.filter((product) => {
-      return (
-        (!minPrice || product.price >= minPrice) &&
-        (!maxPrice || product.price <= maxPrice)
-      );
+    const filteredProducts = allProducts.filter((product) => {
+      const price = Number(product.product_price); // Assuming product_price is a number
+      const isAboveMin = !minPrice || price >= Number(minPrice);
+      const isBelowMax = !maxPrice || price <= Number(maxPrice);
+      return isAboveMin && isBelowMax;
     });
     setProducts(filteredProducts);
   };
 
   return (
     <div className='min-h-screen my-5'>
-        <h1 className='text-center font-bold'> All Products</h1>
+      <h1 className='text-center font-bold'> All Products</h1>
       {/* Navigation Bar */}
       <div className="flex flex-col md:flex-row justify-between border py-2 shadow-md items-center mb-5 px-4 md:px-1">
         {/* Sort Options */}
@@ -86,12 +101,21 @@ const AllProducts = () => {
         </div>
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6 px-4 md:px-0">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {/* Loading Indicator */}
+      {loading ? (
+        <div className="text-center">Loading products...</div>
+      ) : (
+        // Product Grid
+        <div className="grid grid-cols-2 sm:grid-cols-2 bg-slate-100 p-2 rounded-md md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-4 px-4 md:px-0">
+          {products.length > 0 ? (
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <div className="text-center col-span-full">No products found.</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

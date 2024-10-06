@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from '../../assets/furniture.jpeg';
 import ProductCard from './ProductCard';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { FaWhatsapp } from "react-icons/fa";
 
 const ProductPage = () => {
   const { id } = useParams(); // Get product ID from URL
@@ -10,7 +11,7 @@ const ProductPage = () => {
   const [relatedProducts, setRelatedProducts] = useState([]); // State to store related products
   const [loading, setLoading] = useState(true); // State for loading
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // State for current image index
-
+  const navigate = useNavigate()
   // Fetch the product by ID
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,6 +55,19 @@ const ProductPage = () => {
     }
   };
 
+  const formattedPhoneNumber = (phone) => {
+    // Check if the phone number starts with '0'
+    if (phone.startsWith('0')) {
+      // Remove the leading '0' and return the rest of the number
+      return phone.slice(1);
+    }
+    // If it doesn't start with '0', return the number as it is
+    return phone;
+  };
+
+  const navigateToStore = (id) => {
+      navigate(`/store/${id}`)
+  }
   return (
     <div className='min-h-screen mt-5'>
       {loading ? (
@@ -79,11 +93,21 @@ const ProductPage = () => {
               <p className='text-white mt-5'>{product ? product.product_description : 'Product description goes here...'}</p>
               <h2 className='my-3 text-teal-800 font-semibold'>{product ? product.category : 'Category'}</h2>
               <h1 className='font-bold text-2xl text-blue-900 mt-3'>
-                <sup>Kes</sup> {product ? product.product_price : 'Price'} /= 
+                <sup>Kes</sup> {product ? product.product_price : 'Price'} /=
               </h1>
 
-              <button className='p-2 text-white bg-blue-900 mt-2 rounded-md'>Message Business</button> <br />
-              <button className='p-2 text-white bg-slate-900 mt-2 rounded-md'>Visit Store</button>
+              <button
+                className='bg-teal-900 flex text-xl justify-around items-center mt-2 p-2 text-white rounded'
+                onClick={() => {
+                  const currentUrl = window.location.href; // Get the current URL
+                  const message = `Hello, I found this product on Soko-kuu. I'd love to inquire about it: ${currentUrl}`;
+                  window.open(`https://wa.me/+254${formattedPhoneNumber(product.user_contact)}?text=${encodeURIComponent(message)}`, '_blank');
+                }}
+              >
+                message <FaWhatsapp className='mx-2' />
+              </button>
+              <br />
+              <button className='p-2 text-white bg-slate-900 mt-2 rounded-md' onClick={() => navigateToStore(product.user_id)}>Visit Store</button>
             </div>
           </div>
 

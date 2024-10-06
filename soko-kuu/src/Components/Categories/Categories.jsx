@@ -39,8 +39,8 @@ const Categories = () => {
           ) : (
             categories.map((category) => (
               <CategoryCard
-                key={category.id}
-                name={category.name}
+                key={category.category_id}
+                name={category.category_name}
                 banner={category.banner || Logo} // Use default Logo if banner is missing
               />
             ))

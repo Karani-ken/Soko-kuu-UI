@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Logo from '../../assets/soko-kuu.png';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
   return (
     <div>
       {/* Header */}
@@ -22,11 +26,13 @@ const Navbar = () => {
           <input
             type="text"
             placeholder='Search...'
+            value={searchTerm}
+            onChange={handleSearch}
             className='border-2 border-slate-400 w-full sm:w-80 p-1 rounded'
           />
-          <button className='p-1 font-medium rounded bg-blue-900 text-white'>
+          <Link to={`/search/${searchTerm}`} className='p-1 font-medium rounded bg-blue-900 text-white'>
             Search
-          </button>
+          </Link>
         </div>
 
         {/* Navigation links */}

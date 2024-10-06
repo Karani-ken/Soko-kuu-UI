@@ -8,6 +8,7 @@ import ProductPage from './Components/Products/ProductPage'
 import Store from './Components/Business/Store'
 import ServicePage from './Components/Services/ServicePage'
 import AllProducts from './Components/Products/AllProducts'
+import Search from './Components/Home/Search'
 
 
 function App() {
@@ -19,11 +20,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/category' element={<CategoryPage />} />
+          <Route path='/category/:category' element={<CategoryPage />} />
           <Route path='/products/:id' element={<ProductPage />} />
-          <Route path='/store' element={<Store />} />
-          <Route path='/servicepage' element={<ServicePage />} />
+          <Route path='/store/:id' element={<Store />} />
+          <Route path='/servicepage/:id' element={<ServicePage />} />
           <Route path='/all-products' element={<AllProducts />} />
+          <Route path='/search/:searchTerm' element={<Search />} />
         </Routes>
         <Footer />
       </div>
