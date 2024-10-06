@@ -63,9 +63,9 @@ const Store = () => {
     const getBadgeColor = (subscriptionType) => {
         switch (subscriptionType) {
             case 'bronze':
-                return 'text-red-700'; // Define your CSS class for Bronze
+                return 'text-yellow-800'; // Define your CSS class for Bronze
             case 'silver':
-                return 'text-slate-500'; // Define your CSS class for Silver
+                return 'text-slate-400'; // Define your CSS class for Silver
             case 'gold':
                 return 'text-yellow-500'; // Define your CSS class for Gold
             default:
@@ -124,7 +124,7 @@ const Store = () => {
             </div>
 
             {/* Product Search and Count Section */}
-            <div className='bg-blue-400 mt-4 p-5 rounded md:flex justify-between'>
+            <div className='bg-blue-400 mt-4 p-2 rounded md:flex justify-between'>
                 <h1 className='text-white text-xl font-bold'>Products: {loading ? "Loading..." : filteredProducts.length}</h1>
                 <div className='bg-white p-1 rounded-md flex'>
                     <input
@@ -144,9 +144,9 @@ const Store = () => {
             </div>
 
             {/* Products Section */}
-            <div className='bg-slate-100 mt-4 rounded p-3 mb-4'>
+            <div className='bg-slate-100 mt-4 rounded  mb-4'>
                 <h1 className='text-center font-bold'>All Products</h1>
-                <div className='md:p-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 overflow-x-auto'>
+                <div className='md:p-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 overflow-x-auto'>
                     {loading ? renderPlaceholderProducts() : (
                         filteredProducts.length > 0 ? (
                             filteredProducts.map((product) => (

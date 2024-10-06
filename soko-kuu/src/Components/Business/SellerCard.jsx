@@ -7,7 +7,7 @@ const SellerCard = ({ seller }) => {
   
   // Navigate to the store page when the card is clicked
   const handleNavigate = () => {
-    navigate('/store', { state: { sellerId: seller.id } }); // Pass seller ID or any relevant data
+    navigate(`/store/${seller.id}`); // Pass seller ID or any relevant data
   };
 
   return (
@@ -23,7 +23,7 @@ const SellerCard = ({ seller }) => {
       <div className="absolute inset-0 bg-black bg-opacity-20 ">
         <h1 className='text-center mt-32 text-white bg-blue-400 font-semibold'>{seller.name || "Business ABC"}</h1>
         <div className="flex justify-center mt-5">
-          <button className='text-white bg-blue-400 rounded-lg bg-opacity-80 p-2'>Visit Store</button>
+          <button className='text-white bg-blue-400 rounded-lg bg-opacity-80 p-2'  onClick={handleNavigate}>Visit Store</button>
         </div>
       </div>
     </div>

@@ -116,7 +116,7 @@ const ServiceBanner = () => {
                             <p>No services available at the moment.</p>
                         )}
                     </div>
-                    <div className='w-1/2'>
+                    <div className='md:w-1/2 lg:w-1/2'>
                         {/* Display the first image from service_images if available */}
                         <img
                             src={displayedService ? getFirstImageUrl(displayedService) : Logo}

@@ -68,18 +68,24 @@ const ProductPage = () => {
   const navigateToStore = (id) => {
       navigate(`/store/${id}`)
   }
+
+  const formatPrice = (price) => {
+    if (!price) return 'N/A'; // Fallback in case price is null or undefined
+    return Number(price).toLocaleString('en-KE');
+  };
+
   return (
     <div className='min-h-screen mt-5'>
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center min-h-screen">
           <p className="text-xl font-bold">Loading...</p> {/* Adjust loading style as needed */}
         </div>
       ) : (
         <>
-          <div className='bg-slate-200 grid h-[70vh] grid-cols-1 md:grid-cols-2 shadow rounded-md'>
+          <div className='bg-slate-200 grid mb-32 md:mb-4 h-screen lg:h-[75vh]  grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 shadow rounded-md'>
             {/* Product Images Section */}
-            <div className='w-full p-2 h-80'>
-              <img src={product ? getProductImage() : Image} alt={product ? product.product_name : 'Product'} className='w-full rounded-md h-72' />
+            <div className='w-full p-2 '>
+              <img src={product ? getProductImage() : Image} alt={product ? product.product_name : 'Product'} className='w-full object-scale-fit rounded-md h-72' />
               <div className='flex justify-center gap-4 w-full my-2'>
                 {product && JSON.parse(product.product_images).map((img, index) => (
                   <img key={index} src={img} alt={`Product ${index}`} className='w-32 h-24' />
@@ -93,7 +99,7 @@ const ProductPage = () => {
               <p className='text-white mt-5'>{product ? product.product_description : 'Product description goes here...'}</p>
               <h2 className='my-3 text-teal-800 font-semibold'>{product ? product.category : 'Category'}</h2>
               <h1 className='font-bold text-2xl text-blue-900 mt-3'>
-                <sup>Kes</sup> {product ? product.product_price : 'Price'} /=
+                <sup>Kes</sup> {product ? formatPrice(product.product_price): 'Price'} /=
               </h1>
 
               <button
