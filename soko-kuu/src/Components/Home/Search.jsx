@@ -42,10 +42,10 @@ const Search = () => {
   // Filter results whenever the search term or data changes
   useEffect(() => {
     if (searchTerm) {
-      setFilteredBusinesses(businesses.filter(business => business.name.toLowerCase().includes(searchTerm.toLowerCase())));
-      setFilteredProducts(products.filter(product => product.product_name.toLowerCase().includes(searchTerm.toLowerCase())));
-      setFilteredServices(services.filter(service => service.service_name.toLowerCase().includes(searchTerm.toLowerCase())));
-      setFilteredCategories(categories.filter(category => category.name.toLowerCase().includes(searchTerm.toLowerCase())));
+      setFilteredBusinesses(businesses.filter(business => business?.name.toLowerCase().includes(searchTerm.toLowerCase())));
+      setFilteredProducts(products.filter(product => product?.product_name.toLowerCase().includes(searchTerm.toLowerCase())));
+      setFilteredServices(services.filter(service => service?.service_name.toLowerCase().includes(searchTerm.toLowerCase())));
+      setFilteredCategories(categories.filter(category => category?.category_name.toLowerCase().includes(searchTerm.toLowerCase())));
     } else {
       // Reset filtered results if searchTerm is empty
       setFilteredBusinesses([]);
@@ -56,7 +56,7 @@ const Search = () => {
   }, [searchTerm, businesses, products, services, categories]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 min-h-screen">
       {/* Search Results */}
       <div>
         {searchTerm && (
@@ -91,7 +91,7 @@ const Search = () => {
             <h2 className="font-bold mt-4">Categories</h2>
             <div className="flex flex-wrap">
               {filteredCategories.length > 0 ? (
-                filteredCategories.map((category) => <CategoryCard key={category.id} name={category.name} banner={category.banner} />)
+                filteredCategories.map((category) => <CategoryCard key={category.category_id} name={category.category_name} banner={category.banner} />)
               ) : (
                 <p>No matching categories found.</p>
               )}
