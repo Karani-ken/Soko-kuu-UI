@@ -12,6 +12,11 @@ import Search from './Components/Home/Search'
 import AllServices from './Components/Services/AllServices'
 import AllCategories from './Components/Categories/AllCategories'
 import AllBusinesses from './Components/Business/AllBusinesses'
+import Login from './Components/Authentication/Login'
+import RegisterForm from './Components/Authentication/RegisterForm'
+import PasswordResetForm from './Components/Authentication/PasswordResetForm'
+import ResetPassword from './Components/Authentication/ResetPassword'
+import ProfilePage from './Components/Profile/ProfilePage'
 
 
 function App() {
@@ -23,6 +28,11 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/signin' element={<Login />} />
+          <Route path='/signup' element={<RegisterForm />} />
+          <Route path='/password-reset' element={<PasswordResetForm/>} />
+          <Route path='/reset-form' element={<ResetPassword />} />
           <Route path='/category/:category' element={<CategoryPage />} />
           <Route path='/products/:id' element={<ProductPage />} />
           <Route path='/store/:id' element={<Store />} />
