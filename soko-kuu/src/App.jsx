@@ -9,6 +9,9 @@ import Store from './Components/Business/Store'
 import ServicePage from './Components/Services/ServicePage'
 import AllProducts from './Components/Products/AllProducts'
 import Search from './Components/Home/Search'
+import AllServices from './Components/Services/AllServices'
+import AllCategories from './Components/Categories/AllCategories'
+import AllBusinesses from './Components/Business/AllBusinesses'
 
 
 function App() {
@@ -25,6 +28,9 @@ function App() {
           <Route path='/store/:id' element={<Store />} />
           <Route path='/servicepage/:id' element={<ServicePage />} />
           <Route path='/all-products' element={<AllProducts />} />
+          <Route path='/businesses' element={<AllBusinesses />} />
+          <Route path='/all-services' element={<AllServices />} />
+          <Route path='/all-categories' element={<AllCategories />} />
           <Route path='/search/:searchTerm' element={<Search />} />
         </Routes>
         <Footer />

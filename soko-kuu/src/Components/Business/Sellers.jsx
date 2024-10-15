@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SellerCard from './SellerCard';
 import axios from 'axios';
 
@@ -26,9 +27,9 @@ const Sellers = () => {
   return (
     <div className='bg-white text-center my-10 py-4'>
       <h1 className='text-center font-bold text-xl'>Soko-kuu Sellers</h1>
-      <div className='flex justify-end my-1'>
+      <Link to='/businesses' className='flex justify-end my-1'>
         <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-      </div>
+      </Link>
       <div className='bg-slate-100 p-5 w-full rounded flex justify-around overflow-x-scroll h-80'>
         {loading ? (
           // Render empty SellerCards while loading

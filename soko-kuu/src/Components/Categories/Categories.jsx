@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
 import Logo from '../../assets/soko-kuu.png';
 import axios from 'axios';
@@ -26,9 +27,9 @@ const Categories = () => {
   return (
     <div className='h-80 mb-4 bg-white rounded'>
       <h2 className='text-center text-xl font-bold'>Product Categories</h2>
-      <div className='flex justify-end my-1'>
+      <Link to='/all-categories' className='flex justify-end my-1'>
         <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-      </div>
+      </Link>
       <div className="w-full overflow-x-auto bg-sky-100 rounded-md">
         <div className="flex justify-around p-3">
           {loading ? (

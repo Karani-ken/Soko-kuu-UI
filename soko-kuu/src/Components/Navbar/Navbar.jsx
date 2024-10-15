@@ -37,7 +37,7 @@ const Navbar = () => {
 
         {/* Navigation links */}
         <ul className='flex flex-wrap justify-center sm:justify-end space-x-3'>
-          <li className='m-2 font-medium text-sm sm:text-md'>Home</li>
+          <Link to='/' className='m-2 font-medium text-sm sm:text-md'>Home</Link>
           <li className='m-2 font-medium text-sm sm:text-md'>Help Center</li>
           <li className='m-2 font-medium text-sm sm:text-md'>Become a Seller</li>
           <li className='m-2 font-medium text-sm sm:text-md'>Get the App</li>

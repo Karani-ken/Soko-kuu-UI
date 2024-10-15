@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams,useLocation } from 'react-router-dom';
+import { useParams,useLocation,Link } from 'react-router-dom';
 import axios from 'axios';
 
 import ProductCard from '../Products/ProductCard';
@@ -77,9 +77,9 @@ const CategoryPage = () => {
       {/* Recommended Products Section */}
       <div className='bg-white mb-4'>
         <h1 className='text-center font-bold my-2'>Recommended Products in this category</h1>
-        <div className='flex justify-end my-1'>
+        <Link to='/all-products' className='flex justify-end my-1'>
           <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-        </div>
+        </Link>
         {/* Show loading skeleton if data is loading */}
         {loading ? (
           renderLoadingSkeleton()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams,Link } from 'react-router-dom';
 import Image1 from '../../assets/salon.jpg'; // Fallback image if service image is unavailable
 import ServiceCard from './ServiceCard';
 import axios from 'axios';
@@ -97,9 +97,9 @@ const ServicePage = () => {
 
                     <div className='bg-white-100 mb-4 my-4'>
                         <h1 className='text-center font-bold text-xl'>Similar Services</h1>
-                        <div className='flex justify-end my-1'>
+                        <Link className='flex justify-end my-1'>
                             <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-                        </div>
+                        </Link>
                         <div className='bg-slate-100 p-5 w-full flex justify-around overflow-x-scroll rounded-md'>
                             {similarServices.length > 0 ? (
                                 similarServices.map((service) => (

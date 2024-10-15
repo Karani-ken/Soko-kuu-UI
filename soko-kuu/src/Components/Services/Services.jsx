@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ServiceCard from './ServiceCard';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
     const [services, setServices] = useState([]); // State to store all services
@@ -34,9 +35,9 @@ const Services = () => {
     return (
         <div className='bg-white-100 mb-4 h-80'>
             <h1 className='text-center font-bold text-xl'>Soko-Kuu Services</h1>
-            <div className='flex justify-end my-1'>
+            <Link to='/all-services' className='flex justify-end my-1'>
                 <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-            </div>
+            </Link>
             <div className='bg-slate-100 p-5 w-full flex justify-around overflow-x-scroll rounded-md'>
                 {loading ? (
                     // Render empty ServiceCards while loading
