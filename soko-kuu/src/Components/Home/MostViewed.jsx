@@ -45,7 +45,7 @@ const MostViewed = () => {
         ) : (
           mostViewedProducts.length > 0 ? (
             mostViewedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} /> // Pass the product to ProductCard
+              <ProductCard key={product.product_id} product={product} /> // Pass the product to ProductCard
             ))
           ) : (
             <p className='text-white'>No popular products available.</p>

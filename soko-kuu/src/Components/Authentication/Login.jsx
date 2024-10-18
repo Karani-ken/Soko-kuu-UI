@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const Login = () => {
+const Login = ({ toggleLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +24,7 @@ const Login = () => {
             });
 
             // Assuming the response contains the customer ID and a token
-            console.log(response.data)
+            console.log(response.data);
             const token = response.data;
 
             // Store the token in localStorage
@@ -42,10 +42,12 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center p-1 justify-center min-h-screen bg-blue-900 bg-opacity-20">
-            <div className="bg-white shadow-md rounded px-8 py-6 max-w-md w-full">
+        // Full-screen background overlay
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            {/* Modal Box */}
+            <div className="bg-white shadow-lg rounded-lg px-8 py-6 w-full max-w-md relative z-50">
                 <h2 className="text-2xl font-bold mb-4 text-center text-blue-900 flex items-center justify-center">
-                    Login
+                   Sign in
                 </h2>
 
                 {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -122,13 +124,15 @@ const Login = () => {
                             'Login'
                         )}
                     </button>
-                    <div>
+                    <div className="mt-4">
                         <Link to='/signup' className='text-blue-600 m-2'>Not yet a customer? Sign up.</Link> <br />
-
-                        <Link to='/password-reset' className='text-blue-400 m-2'>forgot Password</Link>
+                        <Link to='/password-reset' className='text-blue-400 m-2'>Forgot Password?</Link>
                     </div>
-
                 </form>
+
+                <button className="absolute top-2 right-4 text-2xl text-gray-600 hover:text-gray-900" onClick={toggleLogin}>
+                    &times;
+                </button>
             </div>
         </div>
     );

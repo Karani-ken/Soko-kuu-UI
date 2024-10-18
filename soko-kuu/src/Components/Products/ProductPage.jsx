@@ -101,17 +101,8 @@ const ProductPage = () => {
               <h1 className='font-bold text-2xl text-blue-900 mt-3'>
                 <sup>Kes</sup> {product ? formatPrice(product.product_price): 'Price'} /=
               </h1>
-
-              <button
-                className='bg-teal-900 flex text-xl justify-around items-center mt-2 p-2 text-white rounded'
-                onClick={() => {
-                  const currentUrl = window.location.href; // Get the current URL
-                  const message = `Hello, I found this product on Soko-kuu. I'd love to inquire about it: ${currentUrl}`;
-                  window.open(`https://wa.me/+254${formattedPhoneNumber(product.user_contact)}?text=${encodeURIComponent(message)}`, '_blank');
-                }}
-              >
-                message <FaWhatsapp className='mx-2' />
-              </button>
+                <button className='bg-teal-600 text-white font-bold p-2 rounded-md'>Add to cart</button>
+             
               <br />
               <button className='p-2 text-white bg-slate-900 mt-2 rounded-md' onClick={() => navigateToStore(product.user_id)}>Visit Store</button>
             </div>

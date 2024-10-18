@@ -8,7 +8,7 @@ const ServiceCard = ({ service, loading }) => {
   const handleNavigate = () => {
     navigate(`/servicepage/${service.service_id}`); // Navigate to the service page
   };
-
+console.log(service)
   // Parse the JSON string of images
   let serviceImages = [];
   try {
@@ -21,7 +21,7 @@ const ServiceCard = ({ service, loading }) => {
   const imageToDisplay = serviceImages.length > 0 ? serviceImages[0] : Logo;
 
   return (
-    <div className='max-w-52 p-2 mx-5 border rounded shadow bg-white text-center' onClick={handleNavigate}>
+    <div className='min-w-52 p-2 mx-5 border rounded shadow bg-white text-center' onClick={handleNavigate}>
       {loading ? (
         // Placeholder for loading state
         <div className="animate-pulse">

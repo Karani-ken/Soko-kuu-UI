@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-const RegisterForm = () => {
+const RegisterForm = ({ toggleSignUp, toggleLogin }) => {
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -22,12 +22,12 @@ const RegisterForm = () => {
       number: /\d/, // At least one number
       special: /[!@#$%^&*(),.?":{}|<>]/ // At least one special character
     };
-    
-    return regex.length.test(password) && 
-           regex.upper.test(password) && 
-           regex.lower.test(password) && 
-           regex.number.test(password) && 
-           regex.special.test(password);
+
+    return regex.length.test(password) &&
+      regex.upper.test(password) &&
+      regex.lower.test(password) &&
+      regex.number.test(password) &&
+      regex.special.test(password);
   };
 
   const handleSubmit = async (e) => {
@@ -79,9 +79,9 @@ const RegisterForm = () => {
       <div className="bg-white shadow-md rounded px-8 py-6 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-4 text-center text-blue-900 flex items-center justify-center">
           <FaUser className="mr-2" />
-          Register
+          Sign up
         </h2>
-        
+
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
 
@@ -211,7 +211,10 @@ const RegisterForm = () => {
               'Register'
             )}
           </button>
-          <Link to='/signin'>Already a customer? Login</Link>
+          <button className="absolute top-2 right-4 text-2xl text-gray-600 hover:text-gray-900" onClick={toggleSignUp}>
+            &times;
+          </button>
+          <p onClick={toggleLogin} className='cursor-pointer'>Already a customer? Login</p>
         </form>
       </div>
     </div>
