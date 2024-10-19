@@ -18,7 +18,7 @@ const Landingpage = () => {
   useEffect(() => {
     const fetchExclusiveProducts = async () => {
       try {
-        const response = await axios.get('https://api.kelynemedia.co.ke/products/exclusive-products');
+        const response = await axios.get('https://api.kelynemedia.co.ke/products/products/84');
         setExclusiveProducts(response.data);
       } catch (error) {
         console.error('Error fetching exclusive products:', error);
@@ -117,7 +117,7 @@ const Landingpage = () => {
   }
 
   return (
-    <div className="bg-blue-500 my-4 rounded-md flex flex-col md:flex-row lg:flex-row w-full h-[70vh] md:h-[60vh] lg:h-96 p-4 lg:p-0">
+    <div className="bg-blue-500 my-2 rounded-md flex flex-col md:flex-row lg:flex-row w-full h-[70vh] md:h-[60vh] lg:h-96 p-4 lg:p-0">
 
       {/* Top Categories Section */}
       <div className="lg:w-1/4 w-full hidden lg:block text-center mb-6 lg:mb-0">
@@ -150,8 +150,7 @@ const Landingpage = () => {
       </div>
 
       {/* Middle Section: Product Highlight */}
-      <div className="lg:w-2/4 w-full min-h-72">
-        <h1 className="text-center text-white text-xl font-bold">Exclusive Products</h1>
+      <div className="lg:w-2/4 w-full min-h-72">        
         <div className=" md:flex lg:flex justify-center">
           <div className="text-center lg:text-left flex flex-col md:flex-row lg:flex-row justify-between bg-white  rounded-lg shadow-md w-full">
             <div className="lg:w-1/2 w-full md:w-1/2 p-2">
@@ -161,7 +160,7 @@ const Landingpage = () => {
                   <h1 className="font-bold my-3 lg:my-5 text-lg lg:text-xl">{currentProduct.product_name}</h1>
                   <p className="font-medium text-slate-600 text-sm lg:text-base">{currentProduct.product_description}</p>
                   <h1 className="my-3 lg:my-5 bg-black p-1 text-white font-bold mx-auto lg:mx-14 text-lg lg:text-xl w-28 lg:w-32 text-center rounded">
-                    <sup>Kes</sup> {currentProduct.product_price} /=
+                    <sup>Kes</sup> {currentProduct.product_price} 
                   </h1>
                   <button className="bg-blue-400 p-1 mt-3 lg:mt-5 rounded text-white font-medium" onClick={() => handleNavigate(currentProduct.product_id)}>See more</button>
                 </>
@@ -174,7 +173,7 @@ const Landingpage = () => {
                 <img
                   src={getProductImage(currentProduct)}
                   alt={currentProduct.product_name}
-                  className="w-full lg:w-72 h-48 md:h-72 lg:h-72 object-fill rounded-lg"
+                  className="w-full lg:w-72 h-48 md:h-72 lg:h-72 object-contain rounded-lg"
                 />
               )}
             </div>

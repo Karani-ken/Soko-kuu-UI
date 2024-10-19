@@ -17,21 +17,8 @@ const Footer = () => {
                 <li className='text-sm'>About us</li>
                 <li className='text-sm'>Terms and Conditions</li>
             </ul>
-        </div>
-        <div className='mb-2'>
-            <h1 className='font-semibold'>Useful Links</h1>
-            <ul>
-                <li className='text-sm'>Sell on Soko-Kuu</li>
-                <li className='text-sm'>Stores</li>
-            </ul>
-        </div>
-        <div className='mb-2'>
-            <h1 className='font-semibold'>Social Media</h1>
-            <ul>
-                <li className='text-sm'>Facebook</li>
-                <li className='text-sm'>Instagram</li>
-            </ul>
-        </div>
+        </div>     
+        
         <div>
             <h1 className='font-semibold'>Download App</h1>
           <p className='text-sm'>Playstore</p>

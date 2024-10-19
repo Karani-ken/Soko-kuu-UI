@@ -28,7 +28,7 @@ function App() {
 
   return (
     <Router>
-      <div className='lg:mx-16'>
+      <div className='lg:mx-16 '>
         <Navbar />
         <ToastContainer /> 
         <Routes>

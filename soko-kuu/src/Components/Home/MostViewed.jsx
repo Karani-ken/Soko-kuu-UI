@@ -11,7 +11,7 @@ const MostViewed = () => {
   useEffect(() => {
     const fetchMostViewedProducts = async () => {
       try {
-        const response = await axios.get('https://api.kelynemedia.co.ke/products/all'); // Adjust endpoint as necessary
+        const response = await axios.get('https://api.kelynemedia.co.ke/products/products/84'); // Adjust endpoint as necessary
         const shuffledProducts = response.data.sort(() => 0.5 - Math.random()); // Shuffle products
         setMostViewedProducts(shuffledProducts.slice(0, 10)); // Get the first 10 products
       } catch (error) {

@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast
 
-const API_URL = 'http://localhost:4000';
+//const API_URL = 'http://localhost:4000';
+const API_URL = "https://api.kelynemedia.co.ke"
 
 const initialState = {
   cart: null,

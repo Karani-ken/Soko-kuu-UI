@@ -12,7 +12,7 @@ const Recommended = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://api.kelynemedia.co.ke/products/all');
+        const response = await axios.get('https://api.kelynemedia.co.ke/products/products/84');
         setProducts(response.data); // Store the fetched products
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -33,14 +33,14 @@ const Recommended = () => {
   }, [products]);
 
   return (
-    <div className='bg-white text-center my-10 py-4'>
+    <div className='bg-white text-center my-3 py-4'>
       <h1 className='text-center font-bold text-xl'>Recommended Products</h1>
       <div className='flex justify-end my-1'>
-        <Link to='/all-products'>
-          <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
+        <Link to='/all-products' className='font-bold p-2'>
+          See all
         </Link>
       </div>
-      <div className='bg-blue-900 p-5 w-full rounded flex justify-around overflow-x-scroll h-72'>
+      <div className='bg-blue-200 p-2 w-full rounded  grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10 overflow-x-auto lg:gap-5'>
         {loading ? (
           // Render empty ProductCards while loading
           Array.from({ length: 10 }).map((_, index) => (

@@ -41,7 +41,7 @@ const CategoryPage = () => {
     <div className='min-h-screen'>
       {/* Category Banner */}
       <div
-        className='bg-slate-100 w-full h-52 mt-4 shadow-md border rounded'
+        className='bg-slate-100 w-full h-72 mt-4 shadow-md border rounded'
         style={{
           backgroundImage: `url(${banner})`,
           backgroundSize: 'cover',
@@ -54,7 +54,7 @@ const CategoryPage = () => {
       </div>
 
       {/* Top Products Section */}
-      <div className='bg-slate-100 bg-opacity-80 border lg:mx-28 mt-[-10%] rounded-md p-3'>
+      <div className='bg-slate-100  bg-opacity-50 border mx-0 md:mx-0 lg:mx-20  mt-[-50%] md:mt-[-15%] rounded-md md:p-3'>
         <h1 className='text-center text-black font-bold mb-4 lg:mx-80 rounded'>
           Top Products
         </h1>
@@ -62,7 +62,7 @@ const CategoryPage = () => {
         {loading ? (
           renderLoadingSkeleton()
         ) : (
-          <div className='flex w-full justify-around overflow-x-auto py-2'>
+          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-10 overflow-x-auto py-2'>
             {products.length > 0 ? (
               products.slice(0, 4).map((product) => (
                 <ProductCard key={product.product_id} product={product} />
@@ -77,14 +77,12 @@ const CategoryPage = () => {
       {/* Recommended Products Section */}
       <div className='bg-white mb-4'>
         <h1 className='text-center font-bold my-2'>Recommended Products in this category</h1>
-        <Link to='/all-products' className='flex justify-end my-1'>
-          <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-        </Link>
+       
         {/* Show loading skeleton if data is loading */}
         {loading ? (
           renderLoadingSkeleton()
         ) : (
-          <div className='flex w-full bg-slate-200 justify-around overflow-x-auto py-2 rounded-md'>
+          <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 w-full  overflow-x-auto p-2 rounded-md'>
             {products.length > 0 ? (
               products.slice(4).map((product) => (
                 <ProductCard key={product.product_id} product={product} />

@@ -93,7 +93,7 @@ const AllCategories = () => {
         <div className="text-center">Loading categories...</div>
       ) : (
         // Category Grid
-        <div className="grid grid-cols-2 sm:grid-cols-2 bg-slate-100 p-2 rounded-md md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-4 px-4 md:px-0">
+        <div className="grid grid-cols-2 sm:grid-cols-2 bg-slate-100 p-2 rounded-md md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-10 lg:gap-10 px-4 md:px-0">
           {categories.length > 0 ? (
             categories.map((category) => (
               <CategoryCard key={category.categor_id} category={category} name={category.category_name}

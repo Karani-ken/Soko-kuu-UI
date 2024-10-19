@@ -10,20 +10,20 @@ const CategoryCard = ({ name, banner }) => {
   };
 
   return (
-    <div
-      onClick={handleNavigate}
-      className="min-w-52 h-56 mx-5 cursor-pointer relative rounded-lg overflow-hidden p-2 bg-gray-50"
-      style={{
-        backgroundImage: `url(${banner || Logo})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-20">
-        <h1 className='text-center mt-32 text-white bg-blue-400 font-semibold'>{name}</h1>
-        <button className='text-white bg-blue-400 mx-10 mt-5 rounded-lg bg-opacity-80 p-2'>View Products</button>
+    <div className='min-w-40 h-40 mx-5'>
+      <div
+        onClick={handleNavigate}
+        className="min-w-40 h-40  cursor-pointer relative rounded-lg overflow-hidden p-2 bg-gray-50"
+        style={{
+          backgroundImage: `url(${banner || Logo})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >       
       </div>
+      <h1 className='text-center mt-1 text-black font-semibold'>{name}</h1>
     </div>
+
   );
 };
 

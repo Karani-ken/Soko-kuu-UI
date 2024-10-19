@@ -8,12 +8,18 @@ const Categories = () => {
   const [categories, setCategories] = useState([]); // State to store categories
   const [loading, setLoading] = useState(true); // Loading state
 
+  // Function to shuffle categories
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
   // Fetch categories from the backend API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://api.kelynemedia.co.ke/categories/all-categories'); // Adjust endpoint as necessary
-        setCategories(response.data); // Store the fetched categories
+        const response = await axios.get('https://api.kelynemedia.co.ke/categories/get-productcategories'); // Adjust endpoint as necessary
+        const shuffledCategories = shuffleArray(response.data); // Shuffle categories
+        setCategories(shuffledCategories.slice(0, 6)); // Store only the first 10 shuffled categories
       } catch (error) {
         console.error('Error fetching categories:', error);
       } finally {
@@ -25,16 +31,15 @@ const Categories = () => {
   }, []); // Fetch once on component mount
 
   return (
-    <div className='h-80 mb-4 bg-white rounded'>
-      <h2 className='text-center text-xl font-bold'>Product Categories</h2>
-      <Link to='/all-categories' className='flex justify-end my-1'>
-        <button className='p-1 bg-blue-400 text-white rounded mx-2'>See all</button>
-      </Link>
-      <div className="w-full overflow-x-auto bg-sky-100 rounded-md">
-        <div className="flex justify-around p-3">
+    <div className=' mb-2 bg-white rounded'>
+      <div className="w-full overflow-x-auto h-64 bg-sky-100 rounded-md">
+        <Link to='/all-categories' className='flex justify-end my-1 p-1 font-bold '>
+          See all
+        </Link>
+        <div className="flex justify-around p-2">
           {loading ? (
             // Placeholder for loading state
-            Array.from({ length: 8 }).map((_, index) => (
+            Array.from({ length: 10 }).map((_, index) => (
               <CategoryCard key={index} name="Loading..." banner={Logo} loading />
             ))
           ) : (

@@ -6,16 +6,15 @@ import Recommended from './Recommended'
 import ServiceBanner from '../Services/ServiceBanner'
 import Sellers from '../Business/Sellers'
 import MostViewed from './MostViewed'
+import { AllProducts } from './AllProducts'
 
 const Home = () => {
   return (
     <div>
         <Landingpage />
-        <Categories />
-        <Services />
-        <Recommended />
-        <ServiceBanner />
-        <Sellers />
+        <Categories />     
+        <Recommended />  
+        <AllProducts />    
         <MostViewed />
     </div>
   )
