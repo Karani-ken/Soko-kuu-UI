@@ -37,7 +37,7 @@ const PasswordResetForm = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:4000/customer/send-otp', { email });
+            const response = await axios.post('https://api.kelynemedia.co.ke/customer/send-otp', { email });
             setSuccessMessage(response.data.message);
             setEmail(''); // Clear the input field
         } catch (err) {

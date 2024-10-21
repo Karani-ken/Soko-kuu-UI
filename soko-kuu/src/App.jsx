@@ -22,13 +22,14 @@ import ProfilePage from './Components/Profile/ProfilePage'
 import Orders from './Components/Orders/Orders'
 import OrderTracking from './Components/Orders/OrderTracking'
 import CheckOut from './Components/CheckOut/CheckOut';
+import OrderSuccessPage from './Components/CheckOut/OrderSuccessPage';
 
 function App() {
 
 
   return (
     <Router>
-      <div className='lg:mx-16 '>
+      <div className='lg:mx-16 min-h-screen'>
         <Navbar />
         <ToastContainer /> 
         <Routes>
@@ -50,6 +51,7 @@ function App() {
           <Route path='/search/:searchTerm' element={<Search />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/track-order' element={<OrderTracking />} />
+          <Route path='/order-success' element={<OrderSuccessPage />} />
         </Routes>
         <Footer />
       </div>

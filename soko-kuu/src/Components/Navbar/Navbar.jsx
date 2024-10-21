@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Logo from '../../assets/soko-kuu.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaShoppingCart, FaBars } from "react-icons/fa";
 import Cart from '../Cart/Cart';
+import { FcViewDetails } from "react-icons/fc";
 import Login from '../Authentication/Login';
 import RegisterForm from '../Authentication/RegisterForm';
 
@@ -12,7 +13,7 @@ const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for the sidebar
-
+  const navigate = useNavigate()
   // Toggle cart visibility, if user is not logged in, prompt login
   const toggleCart = () => {
     if (isLoggedIn()) {
@@ -51,30 +52,55 @@ const Navbar = () => {
     return !!localStorage.getItem('token');
   };
 
+  const handleNavigateToOrders = () => {
+    navigate('/orders')
+  }
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    navigate('/')
     window.location.reload();
   };
 
   return (
     <div>
       {/* Header */}
-      <header className='bg-blue-900 text-white md:flex justify-evenly p-2 text-center rounded-sm'>
-        <h1 className='font-medium text-sm sm:text-base md:text-lg lg:text-xl'>
-          Offer! Offer! Offer! Get Amazing deals at Soko-Kuu
+      <header className='bg-blue-900 text-white md:flex justify-between p-2 text-center rounded-sm'>
+        <h1 className='font-medium text-sm text-center sm:text-base md:text-lg lg:text-xl'>
+          Get Amazing deals at Soko-Kuu
         </h1>
-        <div className='flex justify-center cursor-pointer hover:bg-blue-400 p-1 rounded' onClick={toggleCart}>
-          <FaShoppingCart className='text-3xl h-7' />
+        <div className='flex justify-between md:justify-end lg:justify-end bg-blue-400 md:bg-blue-900 lg:bg-blue-900 rounded'>
+          {isLoggedIn() && (
+            <>
+              <button className='cursor-pointer mx-3 hover:bg-blue-400 p-1 rounded' onClick={toggleCart}>
+                <FaShoppingCart className='text-2xl' /> Cart
+              </button>
+              <button className='cursor-pointer mx-3 p-1 hover:bg-blue-400 rounded' onClick={handleNavigateToOrders}>
+                <FcViewDetails className='text-2xl' /> Orders
+              </button>
+              <button onClick={handleSignOut} className='text-center p-1'>
+                <FaUser className='text-2xl' />
+                Sign out
+              </button>
+            </>
+          )}
+          {!isLoggedIn() && (
+            <button className='mx-3'>
+              <Link to='/signin' className='text-center p-1'>
+                <FaUser className='text-2xl' />
+                Sign in
+              </Link>
+            </button>
+          )}
         </div>
       </header>
 
       {/* Navbar */}
       <nav className='mt-1 flex flex-row justify-between items-center border rounded p-2 shadow-sm'>
         {/* Logo */}
-        <Link to='/'><img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0' /></Link>
+        <Link to='/'><img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0 object-contain' /></Link>
 
         {/* Search bar */}
-        <div className='flex w-full sm:w-auto items-center space-x-2 mb-2 sm:mb-0'>
+        <div className='flex w-full sm:w-auto items-center space-x-2 mb-2 mx-1 sm:mb-0'>
           <input
             type="text"
             placeholder='Search...'
@@ -105,29 +131,17 @@ const Navbar = () => {
             <li className='m-2 font-medium text-sm sm:text-md'>Help Center</li>
             <li className='m-2 font-medium text-sm sm:text-md'>Become a Seller</li>
             <li className='m-2 font-medium text-sm sm:text-md'>Get the App</li>
+            {isLoggedIn() && (
+              <li><Link to='/profile' className='m-2 font-medium text-sm sm:text-md'>Profile</Link></li>
+            )}
           </ul>
         </div>
-
-
-
-        {/* Conditional rendering based on login state */}
-        {isLoggedIn() ? (
-          <button onClick={handleSignOut} className='text-center'>
-            <FaUser className='ml-4' />
-            Sign out
-          </button>
-        ) : (
-          <button className='text-center' onClick={toggleLogin}>
-            <FaUser className='ml-4' />
-            Sign in
-          </button>
-        )}
       </nav>
 
       {/* Cart, Login, and Register modals */}
       {isCartOpen && <Cart toggleCart={toggleCart} />}
       {isLoginOpen && <Login toggleLogin={toggleLogin} openRegister={openRegister} />} {/* Pass openRegister */}
-      {isRegisterOpen && <RegisterForm toggleRegister={toggleRegister} />} {/* Register modal */}
+
     </div>
   );
 };

@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createOrder } from '../../Redux/orderSlice';
 import { fetchCart } from '../../Redux/cartSlice';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
+import { FaMapMarkerAlt, FaHome, FaShoppingBag } from 'react-icons/fa'; // Import React Icons
 
 const CheckOut = () => {
   const dispatch = useDispatch();
@@ -12,13 +13,14 @@ const CheckOut = () => {
 
   const { items, totalPrice } = useSelector((state) => state.cart);
   const [paymentCode, setPaymentCode] = useState('');
-  const [pickupStation, setPickupStation] = useState('');
+  const [pickupOption, setPickupOption] = useState(''); // No default, user has to choose
   const [address, setAddress] = useState('');
   const [pinLocation, setPinLocation] = useState(false);
   const [deliveryArea, setDeliveryArea] = useState('nyeri');
-  const [deliveryFee, setDeliveryFee] = useState(50); // Default delivery fee for within Nyeri Town
+  const [deliveryFee, setDeliveryFee] = useState(0); // Start with 0 delivery fee
+  const [userLocation, setUserLocation] = useState({ lat: null, lng: null });
 
-  // Fetch the cart details on load
+  // Fetch cart details on load
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -43,10 +45,10 @@ const CheckOut = () => {
       'Skuta': 100,
       'Classic': 100,
       'Ngangarithi': 50,
-      'chania': 50,
-      'farmland': 50,
+      'Chania': 50,
+      'Farmland': 50,
       'Kangemi': 50,
-      'asian Quater': 50,
+      'Asian Quarter': 50,
       'Gatitu': 150,
       'Dekut': 150,
       'Embassy': 150,
@@ -54,14 +56,18 @@ const CheckOut = () => {
       'Citam': 150,
     };
 
-    setDeliveryFee(deliveryFees[address] || 0); // Update delivery fee based on selected address
-  }, [address]);
+    if (pickupOption === 'delivery' && address) {
+      setDeliveryFee(deliveryFees[address] || 0);
+    } else {
+      setDeliveryFee(0); // No delivery fee for pick-up option
+    }
+  }, [address, pickupOption]);
 
   // Handle checkout submit
   const handleCheckout = async (e) => {
     e.preventDefault();
 
-    if (!paymentCode || !pickupStation || !address) {
+    if (!paymentCode || (pickupOption === 'delivery' && (!address || (pinLocation && !deliveryArea)))) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -80,9 +86,12 @@ const CheckOut = () => {
           product_price: item.product_price,
           quantity: item.quantity,
         })),
-        pickup_station: pickupStation,
-        address,
-        delivery_fee: deliveryFee, // Add delivery fee to the order data
+        pickup_option: pickupOption,
+        pickup_station: pickupOption === 'pickup' ? 'Pamki House' : null,
+        address: pickupOption === 'delivery' ? address : null,
+        delivery_fee: pickupOption === 'delivery' ? deliveryFee : 0,
+        delivery_area: pinLocation ? deliveryArea : null,
+        user_location: pinLocation ? userLocation : null, // Storing user location
       };
 
       dispatch(createOrder(orderData))
@@ -94,6 +103,25 @@ const CheckOut = () => {
             toast.error('Failed to create order');
           }
         });
+    }
+  };
+
+  // Get User Location Function
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+          toast.success('Location pinned successfully!');
+          setPinLocation(true);
+        },
+        () => {
+          toast.error('Unable to retrieve your location');
+        }
+      );
+    } else {
+      toast.error('Geolocation is not supported by this browser');
     }
   };
 
@@ -115,105 +143,121 @@ const CheckOut = () => {
           />
         </div>
 
-        {/* Pickup Station */}
+        {/* Pickup or Delivery Option */}
         <div className="mb-4">
-          <label className="block mb-2 font-semibold text-gray-700">Pickup Station</label>
-          <select
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            value={pickupStation}
-            onChange={(e) => setPickupStation(e.target.value)}
-            required
-          >
-            <option value="">Select pickup station</option>
-            <option value="Station A">Pamki House</option>
-          
-          </select>
-        </div>
-
-        {/* Delivery Address */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold text-gray-700">Delivery Address</label>
-          <select
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          >
-            <option value="">Select delivery address</option>
-            <option value="Kandara">Kandara</option>
-            <option value="RingRoad">RingRoad</option>
-            <option value="Kamakwa">Kamakwa</option>
-            <option value="Outspan">Outspan</option>
-            <option value="Kamuyu">Kamuyu</option>
-            <option value="King'ong'o">King'ong'o</option>
-            <option value="Ruring'u">Ruring'u</option>
-            <option value="Skuta">Skuta</option>
-            <option value="Classic">Classic</option>
-            <option value="Ngangarithi">Ngangarithi</option>
-            <option value="chania">chania</option>
-            <option value="farmland">farmland</option>
-            <option value="Kangemi">Kangemi</option>
-            <option value="asian Quater">asian Quater</option>
-            <option value="Gatitu">Gatitu</option>
-            <option value="Dekut">Dekut</option>
-            <option value="Embassy">Embassy</option>
-            <option value="Gamerock">Gamerock</option>
-            <option value="Citam">Citam</option>
-          </select>
-        </div>
-
-        {/* Pin Location Option */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold text-gray-700">Pin Your Location</label>
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              checked={pinLocation}
-              onChange={() => setPinLocation(!pinLocation)}
-              className="mr-2"
-            />
-            <span className="text-gray-600">I want to pin my location</span>
+          <label className="block mb-2 font-semibold text-gray-700">Pickup Option</label>
+          <div className="flex items-center space-x-4">
+            <button
+              type="button"
+              className={`w-full p-3 flex items-center justify-center border rounded-lg ${pickupOption === 'pickup' ? 'bg-teal-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+              onClick={() => setPickupOption('pickup')}
+            >
+              <FaShoppingBag className="mr-2" />
+              Pick Up from Office
+            </button>
+            <button
+              type="button"
+              className={`w-full p-3 flex items-center justify-center border rounded-lg ${pickupOption === 'delivery' ? 'bg-teal-500 text-white' : 'bg-gray-100 text-gray-700'}`}
+              onClick={() => setPickupOption('delivery')}
+            >
+              <FaHome className="mr-2" />
+              Delivery
+            </button>
           </div>
-          {pinLocation && (
-            <div className="mt-4">
-              <label className="block mb-2 font-semibold text-gray-700">Delivery Area</label>
+        </div>
+
+        {/* Conditional Render: Pickup - Show Pamki House */}
+        {pickupOption === 'pickup' && (
+          <div className="mb-4">
+            <label className="block mb-2 font-semibold text-gray-700">Pick-up Location</label>
+            <input
+              type="text"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-200"
+              value="Pamki House"
+              readOnly
+            />
+          </div>
+        )}
+
+        {/* Conditional Render: Delivery - Show Address Options */}
+        {pickupOption === 'delivery' && (
+          <>
+            {/* Delivery Address */}
+            <div className="mb-4">
+              <label className="block mb-2 font-semibold text-gray-700">Delivery Address</label>
               <select
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                value={deliveryArea}
-                onChange={(e) => setDeliveryArea(e.target.value)}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
               >
-                <option value="nyeri">Within Nyeri Town</option>
-                <option value="outside">Outside Nyeri Town</option>
+                <option value="">Select delivery address</option>
+                <option value="Kandara">Kandara</option>
+                <option value="RingRoad">RingRoad</option>
+                <option value="Kamakwa">Kamakwa</option>
+                <option value="Outspan">Outspan</option>
+                <option value="Kamuyu">Kamuyu</option>
+                <option value="King'ong'o">King'ong'o</option>
+                <option value="Ruring'u">Ruring'u</option>
+                <option value="Skuta">Skuta</option>
+                <option value="Classic">Classic</option>
+                <option value="Ngangarithi">Ngangarithi</option>
+                <option value="Chania">Chania</option>
+                <option value="Farmland">Farmland</option>
+                <option value="Kangemi">Kangemi</option>
+                <option value="Asian Quarter">Asian Quarter</option>
+                <option value="Gatitu">Gatitu</option>
+                <option value="Dekut">Dekut</option>
+                <option value="Embassy">Embassy</option>
+                <option value="Gamerock">Gamerock</option>
+                <option value="Citam">Citam</option>
               </select>
             </div>
-          )}
-        </div>
+
+            {/* Pin Location Option */}
+            <div className="flex items-center mb-4">
+              <button
+                type="button"
+                onClick={getLocation}
+                className="flex items-center justify-center p-3 border rounded-lg bg-teal-500 text-white"
+              >
+                <FaMapMarkerAlt className="mr-2" />
+                Pin Location
+              </button>
+              {pinLocation && (
+                <span className="ml-4 text-green-600">Location pinned!</span>
+              )}
+            </div>
+          </>
+        )}
 
         {/* Order Summary */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
-          <ul className="mb-4 space-y-2">
-            {items?.map((item) => (
-              <li key={item.product_id} className="flex justify-between text-gray-700">
-                <span>{item.product_name} - {item.quantity} x {item.product_price}</span>
-                <span>KES {(item.quantity * parseFloat(item.product_price)).toFixed(2)}</span>
+        <div className="border p-4 rounded-lg shadow-md">
+          <h3 className="font-bold text-lg">Order Summary</h3>
+          <ul className="mt-2">
+            {items.map((item) => (
+              <li key={item.product_id} className="flex justify-between">
+                <span>{item.product_name} (x{item.quantity})</span>
+                <span>KSH {item.product_price * item.quantity}</span>
               </li>
             ))}
           </ul>
-          <p className="text-lg font-bold text-gray-900">Subtotal: KES {totalPrice?.toFixed(2)}</p>
-          <p className="text-lg font-bold text-gray-900">Delivery Fee: KES {deliveryFee}</p>
-          <p className="text-lg font-bold text-gray-900">Total: KES {(totalPrice + deliveryFee)?.toFixed(2)}</p>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="mb-4 text-sm text-gray-600">
-          <p>* Delivery charges depend on the selected delivery area.</p>
+          <div className="flex justify-between mt-4 font-bold">
+            <span>Total Price:</span>
+            <span>KSH {totalPrice + deliveryFee}</span>
+          </div>
+          {pickupOption === 'delivery' && (
+            <div className="flex justify-between mt-2 font-bold">
+              <span>Delivery Fee:</span>
+              <span>KSH {deliveryFee}</span>
+            </div>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition"
+          className="w-full p-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
         >
           Place Order
         </button>

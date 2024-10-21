@@ -3,7 +3,7 @@ import axios from 'axios';
 import Image from '../../assets/furniture.jpeg';
 import ProductCard from './ProductCard';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaWhatsapp, FaShareAlt, FaHeart, FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import wishlist and share icons
+import {FaShareAlt, FaHeart, FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import wishlist and share icons
 import { useDispatch, useSelector } from 'react-redux'; // Import Redux hooks
 import { addItemToCart, updateCartItem } from '../../Redux/cartSlice'; // Import your Redux actions
 import { jwtDecode } from 'jwt-decode'; // Import jwt-decode

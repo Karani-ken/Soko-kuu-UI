@@ -9,14 +9,17 @@ export const AllProducts = () => {
   const [expandedCategories, setExpandedCategories] = useState({}); // State to track expanded categories
 
   // Array of prioritized categories
-  const prioritizedCategories = [
-    'All',
+  const prioritizedCategories = [    
     'Phones and Accessories',
     'Tech Solutions',
-    'Beauty Products and Kitchen Appliances',
+    'Beauty Products',
+    'Kitchen Appliances',
     'Home Appliances',
     'Electrical and Electronics',
-    'Food, Drinks, Beverages, Spices',
+    'Food',
+    'Drinks',
+    'Beverages',
+    'Spices',
   ];
 
   // Fetch all products from the API
@@ -117,7 +120,7 @@ export const AllProducts = () => {
           return (
             <div key={category}>
               <h2 className="text-2xl font-bold my-4">{category}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {displayedProducts.map((product) => (
                   <ProductCard key={product.product_id} product={product} />
                 ))}

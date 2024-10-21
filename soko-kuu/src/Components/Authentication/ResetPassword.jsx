@@ -43,7 +43,7 @@ const ResetPassword = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:4000/customer/reset-password', {
+            const response = await axios.post('https://api.kelynemedia.co.ke/customer/reset-password', {
                 email,
                 otp,
                 newPassword

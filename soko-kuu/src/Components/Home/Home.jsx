@@ -10,7 +10,7 @@ import { AllProducts } from './AllProducts'
 
 const Home = () => {
   return (
-    <div>
+    <div className='z-100'>
         <Landingpage />
         <Categories />     
         <Recommended />  

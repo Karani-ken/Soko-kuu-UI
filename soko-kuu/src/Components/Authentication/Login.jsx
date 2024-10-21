@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const Login = ({ toggleLogin }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -18,7 +18,7 @@ const Login = ({ toggleLogin }) => {
         setIsLoading(true); // Start loading
 
         try {
-            const response = await axios.post('http://localhost:4000/customer/customers/login', {
+            const response = await axios.post('https://api.kelynemedia.co.ke/customer/customers/login', {
                 email,
                 password
             });
@@ -31,9 +31,11 @@ const Login = ({ toggleLogin }) => {
             localStorage.setItem('token', token);
 
             // Display success message
-            setSuccessMessage('Login successful');
+            setSuccessMessage('Login successful');            
             setEmail('');
             setPassword('');
+            navigate('/')
+            window.location.reload()
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to login.');
         } finally {
@@ -43,9 +45,9 @@ const Login = ({ toggleLogin }) => {
 
     return (
         // Full-screen background overlay
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className=" flex items-center justify-center min-h-screen">
             {/* Modal Box */}
-            <div className="bg-white shadow-lg rounded-lg px-8 py-6 w-full max-w-md relative z-50">
+            <div className="bg-white shadow-lg rounded-lg border-2 px-8 py-6 w-full max-w-md relative z-50">
                 <h2 className="text-2xl font-bold mb-4 text-center text-blue-900 flex items-center justify-center">
                    Sign in
                 </h2>
@@ -125,14 +127,11 @@ const Login = ({ toggleLogin }) => {
                         )}
                     </button>
                     <div className="mt-4">
-                        <Link to='/signup' className='text-blue-600 m-2'>Not yet a customer? Sign up.</Link> <br />
+                        <Link to='/signup'  className='text-blue-600 m-2'>Not yet a customer? Sign up.</Link> <br />
                         <Link to='/password-reset' className='text-blue-400 m-2'>Forgot Password?</Link>
                     </div>
                 </form>
-
-                <button className="absolute top-2 right-4 text-2xl text-gray-600 hover:text-gray-900" onClick={toggleLogin}>
-                    &times;
-                </button>
+               
             </div>
         </div>
     );
