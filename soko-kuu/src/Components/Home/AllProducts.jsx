@@ -80,7 +80,7 @@ export const AllProducts = () => {
 
   // Render categories, starting with prioritized categories and then the rest
   return (
-    <div className="p-4">
+    <div className="p-1">
       {prioritizedCategories.map((priorityCategory) => {
         const productsInCategory = categories[priorityCategory] || [];
         const isExpanded = expandedCategories[priorityCategory]; // Check if the category is expanded
@@ -90,7 +90,7 @@ export const AllProducts = () => {
           productsInCategory.length > 0 && (
             <div key={priorityCategory}>
               <h2 className="text-2xl font-bold my-4">{priorityCategory}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 md:gap-4 lg:gap-4">
                 {displayedProducts.map((product) => (
                   <ProductCard key={product.product_id} product={product} />
                 ))}
@@ -120,7 +120,7 @@ export const AllProducts = () => {
           return (
             <div key={category}>
               <h2 className="text-2xl font-bold my-4">{category}</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {displayedProducts.map((product) => (
                   <ProductCard key={product.product_id} product={product} />
                 ))}

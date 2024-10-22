@@ -105,7 +105,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className='rounded w-48 sm:w-48 md:w-42 lg:w-56 bg-white text-left p-1 shadow-md h-[300px] border cursor-pointer relative'>
+    <div className='rounded w-42 sm:w-42 md:w-42 lg:w-56 bg-white text-left p-1 shadow-md h-[300px] border cursor-pointer relative'>
       {!isPriceAvailable && (
         <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-10 text-white text-lg font-bold z-10'>
           Not Available

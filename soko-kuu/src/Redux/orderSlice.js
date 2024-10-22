@@ -1,17 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { clearCart } from './cartSlice';
 //const API_URL = 'http://localhost:4000';
 const API_URL = "https://api.kelynemedia.co.ke"
 
+// Place an order and clear cart after success
 export const createOrder = createAsyncThunk(
-  'order/createOrder',
-  async (orderData, { rejectWithValue }) => {
+  'order/placeOrder',
+  async (orderData, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.post(`${API_URL}/orders/place-order`, orderData);
-      return response.data;
+      console.log(response.status)
+      if (response.status === 200) {
+        // Order placed successfully
+        const cart_id = orderData.cart_id;
+        console.log(cart_id)
+                // Dispatch clearCart to clear the cart on the server
+        dispatch(clearCart(cart_id));
+        console.log(`cart of ${cart_id} was deleted`)
+
+        return response.data;
+      } else {
+        return rejectWithValue('Order failed');
+      }
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Error creating order');
+      return rejectWithValue(error.response?.data || 'Error placing order');
     }
   }
 );

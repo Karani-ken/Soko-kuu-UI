@@ -17,12 +17,9 @@ const Footer = () => {
                 <li className='text-sm'>About us</li>
                 <li className='text-sm'>Terms and Conditions</li>
             </ul>
-        </div>     
+        </div>  
         
-        <div>
-            <h1 className='font-semibold'>Download App</h1>
-          <p className='text-sm'>Playstore</p>
-        </div>
+       
         </div>
         <div className='md:flex text-center justify-around  bg-blue-400'>
             <p>All rights reserved &copy; Soko-Kuu Ventures - 2024</p>

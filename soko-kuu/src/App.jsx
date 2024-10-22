@@ -23,6 +23,8 @@ import Orders from './Components/Orders/Orders'
 import OrderTracking from './Components/Orders/OrderTracking'
 import CheckOut from './Components/CheckOut/CheckOut';
 import OrderSuccessPage from './Components/CheckOut/OrderSuccessPage';
+import Help from './Components/Help/Help';
+import GetApp from './Components/Help/GetApp';
 
 function App() {
 
@@ -52,6 +54,8 @@ function App() {
           <Route path='/orders' element={<Orders />} />
           <Route path='/track-order' element={<OrderTracking />} />
           <Route path='/order-success' element={<OrderSuccessPage />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/get-app" element={<GetApp />} />
         </Routes>
         <Footer />
       </div>

@@ -33,14 +33,14 @@ const Recommended = () => {
   }, [products]);
 
   return (
-    <div className='bg-white text-center my-3 py-4'>
+    <div className='bg-white text-center  py-4'>
       <h1 className='text-center font-bold text-xl'>Recommended Products</h1>
       <div className='flex justify-end my-1'>
         <Link to='/all-products' className='font-bold p-2'>
           See all
         </Link>
       </div>
-      <div className='bg-blue-200 p-2 w-full rounded  grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10 overflow-x-auto lg:gap-5'>
+      <div className='bg-blue-200 p-2 w-full rounded  grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-1 overflow-x-auto lg:gap-5'>
         {loading ? (
           // Render empty ProductCards while loading
           Array.from({ length: 10 }).map((_, index) => (

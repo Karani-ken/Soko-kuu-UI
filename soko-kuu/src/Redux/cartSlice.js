@@ -35,7 +35,7 @@ export const fetchCart = createAsyncThunk(
       if (cartItemsData?.data.length === 0) {
         return []; // Return an empty array if there are no cart items
       }
-      console.log(cartItemsData.data)
+     // console.log(cartItemsData.data)
       return cartItemsData.data; // Return the fetched cart items
 
     } catch (error) {
@@ -91,6 +91,20 @@ export const removeCartItem = createAsyncThunk(
   }
 );
 
+// Clear cart by cart_id
+export const clearCart = createAsyncThunk(
+  'cart/clearCart',
+  async (cart_id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${API_URL}/cart/delete/all-items/${cart_id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Error clearing cart');
+    }
+  }
+);
+
+
 // Cart slice
 const cartSlice = createSlice({
   name: 'cart',
@@ -136,6 +150,20 @@ const cartSlice = createSlice({
           state.items[index].quantity = action.payload.quantity;
           toast.info('Item quantity updated!'); // Notify update
         }
+      })
+      .addCase(clearCart.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(clearCart.fulfilled, (state) => {
+        state.loading = false;
+        state.items = []; // Clear items in state when cart is cleared on the server
+        state.totalPrice = 0;
+        toast.success('Cart cleared successfully!'); // Notify user
+      })
+      .addCase(clearCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        toast.error(`Error clearing cart: ${action.payload}`); // Notify error
       })
       .addCase(removeCartItem.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.cart_item_id !== action.payload.cart_item_id);

@@ -6,6 +6,7 @@ const AllProducts = () => {
   const [sortOrder, setSortOrder] = useState('A-Z');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]); // Store original products
   const [loading, setLoading] = useState(true);
@@ -55,11 +56,35 @@ const AllProducts = () => {
     setProducts(filteredProducts);
   };
 
+  // Function to filter products based on the search query
+  const handleSearch = (query) => {
+    const filteredProducts = allProducts.filter(product =>
+      product.product_name.toLowerCase().includes(query.toLowerCase())
+    );
+    setProducts(filteredProducts);
+  };
+
+  // Effect to handle search input changes
+  useEffect(() => {
+    handleSearch(searchQuery);
+  }, [searchQuery]);
+
   return (
     <div className='min-h-screen my-5'>
       <h1 className='text-center font-bold'> All Products</h1>
       {/* Navigation Bar */}
       <div className="flex flex-col md:flex-row justify-between border py-2 shadow-md items-center mb-5 px-4 md:px-1">
+        {/* Search Input */}
+        <div className="flex mb-3 md:mb-0">
+          <input
+            type="text"
+            placeholder="Search Products"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-4 py-2 border rounded w-full md:w-48"
+          />
+        </div>
+
         {/* Sort Options */}
         <div className="flex space-x-2 md:space-x-4 mb-3 md:mb-0">
           <button

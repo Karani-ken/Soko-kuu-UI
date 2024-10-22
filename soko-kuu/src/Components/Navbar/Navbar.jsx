@@ -5,7 +5,6 @@ import { FaUser, FaShoppingCart, FaBars } from "react-icons/fa";
 import Cart from '../Cart/Cart';
 import { FcViewDetails } from "react-icons/fc";
 import Login from '../Authentication/Login';
-import RegisterForm from '../Authentication/RegisterForm';
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -128,9 +127,8 @@ const Navbar = () => {
           </button>
           <ul className='flex flex-col sm:flex-row justify-center sm:justify-end space-y-4 sm:space-y-0 sm:space-x-3 p-4 sm:p-0'>
             <li><Link to='/' className='m-2 font-medium text-sm sm:text-md'>Home</Link></li>
-            <li className='m-2 font-medium text-sm sm:text-md'>Help Center</li>
-            <li className='m-2 font-medium text-sm sm:text-md'>Become a Seller</li>
-            <li className='m-2 font-medium text-sm sm:text-md'>Get the App</li>
+            <li> <Link to='/help' className='m-2 font-medium text-sm sm:text-md'>Help Center</Link> </li>                     
+            <li> <Link to='/get-app' className='m-2 font-medium text-sm sm:text-md'>Get the App</Link> </li>
             {isLoggedIn() && (
               <li><Link to='/profile' className='m-2 font-medium text-sm sm:text-md'>Profile</Link></li>
             )}

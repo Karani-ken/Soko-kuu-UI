@@ -14,8 +14,7 @@ const Home = () => {
         <Landingpage />
         <Categories />     
         <Recommended />  
-        <AllProducts />    
-        <MostViewed />
+        <AllProducts />       
     </div>
   )
 }

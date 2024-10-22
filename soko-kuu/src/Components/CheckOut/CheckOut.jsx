@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createOrder } from '../../Redux/orderSlice';
 import { fetchCart } from '../../Redux/cartSlice';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { FaMapMarkerAlt, FaHome, FaShoppingBag } from 'react-icons/fa'; // Import React Icons
 
 const CheckOut = () => {
@@ -64,6 +64,7 @@ const CheckOut = () => {
   }, [address, pickupOption]);
 
   // Handle checkout submit
+  // Handle checkout submit
   const handleCheckout = async (e) => {
     e.preventDefault();
 
@@ -77,22 +78,24 @@ const CheckOut = () => {
       const decoded = jwtDecode(token);
       const customer_id = decoded.id;
 
+      // Set location based on pickup option
+      const location = pickupOption === 'pickup' ? 'Pamki House' : address;
+
       const orderData = {
         customer_id,
         payment_code: paymentCode,
+        cart_id: items[0].cart_id,
         items: items.map(item => ({
           product_id: item.product_id,
           product_name: item.product_name,
           product_price: item.product_price,
           quantity: item.quantity,
         })),
-        pickup_option: pickupOption,
-        pickup_station: pickupOption === 'pickup' ? 'Pamki House' : null,
-        address: pickupOption === 'delivery' ? address : null,
-        delivery_fee: pickupOption === 'delivery' ? deliveryFee : 0,
-        delivery_area: pinLocation ? deliveryArea : null,
-        user_location: pinLocation ? userLocation : null, // Storing user location
+        location,  // Set location dynamically based on user selection
+        location_pin: pinLocation ? userLocation : null,  // Set pinned location if available
+        totalAmount: totalPrice + deliveryFee,
       };
+      console.log(orderData);
 
       dispatch(createOrder(orderData))
         .then((response) => {
@@ -106,13 +109,14 @@ const CheckOut = () => {
     }
   };
 
+
   // Get User Location Function
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ lat: latitude, lng: longitude });
+          const { latitude, longitude } = position.coords; // Extract latitude and longitude
+          setUserLocation(`${latitude},${longitude}`); // Store them in an array
           toast.success('Location pinned successfully!');
           setPinLocation(true);
         },
@@ -124,6 +128,7 @@ const CheckOut = () => {
       toast.error('Geolocation is not supported by this browser');
     }
   };
+
 
   return (
     <div className="checkout-page max-w-3xl min-h-screen my-4 border mx-auto p-8 bg-white shadow-md rounded-lg">

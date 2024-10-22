@@ -9,7 +9,7 @@ const Cart = ({ toggleCart }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, totalPrice, loading, error } = useSelector((state) => state.cart);
-
+ // console.log(items)
   useEffect(() => {
     const token = localStorage.getItem('token');
 

@@ -6,10 +6,8 @@ const LandingPage = () => {
   const [products, setProducts] = useState([]); // State to hold all products
   const [loading, setLoading] = useState(true); // Loading state
   const [currentIndex, setCurrentIndex] = useState(0); // Index of the currently displayed product
-  const navigate = useNavigate()
-  const prioritizedCategories = [
-    'Fast Food',   
-  ];
+  const navigate = useNavigate();
+  const prioritizedCategories = ['Fast Food'];
 
   // Fetch all products from the API
   const fetchProducts = async () => {
@@ -42,14 +40,27 @@ const LandingPage = () => {
     return () => clearInterval(interval);
   }, [products.length]);
 
-  // Loading and empty state handling
+  // Loading state handling
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className='h-[70vh] bg-white flex mb-2 items-center justify-center relative w-full'>
+        <div className='relative w-full flex flex-col md:flex-row bg-sky-200'>
+          {/* Placeholder for product image */}
+          <div className='w-full flex items-center justify-center relative'>
+            <div className='w-full h-[70vh] bg-gray-300 rounded animate-pulse' />
+          </div>
+          <div className='absolute inset-0 flex items-center justify-center'>
+            <p className='text-lg font-semibold text-gray-500'>Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (products.length === 0) {
     return <div className="text-center">No products available in prioritized categories.</div>;
   }
+
   const handleNavigate = (id) => {
     navigate(`/products/${id}`); // Navigate to the specific product page using the product ID
   };
@@ -58,14 +69,14 @@ const LandingPage = () => {
 
   return (
     <div className='h-[70vh] bg-white flex mb-2 items-center cursor-pointer justify-center relative w-full' 
-    onClick={() => handleNavigate(currentProduct.product_id)} >
+         onClick={() => handleNavigate(currentProduct.product_id)} >
       <div className='relative w-full flex flex-col md:flex-row bg-sky-200'>
         {/* Product Image with Overlay */}
         <div className='w-full flex items-center justify-center relative'>
           <img
             src={currentProduct.product_images ? JSON.parse(currentProduct.product_images)[0] : ''}
             alt={currentProduct.product_name}
-            className='w-full h-[70vh] object-fill  rounded'
+            className='w-full h-[70vh] object-fill rounded'
           />          
         </div>
       </div>
