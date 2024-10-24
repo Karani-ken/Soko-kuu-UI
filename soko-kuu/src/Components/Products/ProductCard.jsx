@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, updateCartItem, fetchCart } from '../../Redux/cartSlice';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,15 @@ import Logo from '../../assets/soko-kuu.png';
 import { jwtDecode } from 'jwt-decode';
 import { FiShare2 } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
+import { toast } from 'react-toastify'; // Import toast for notifications
+import AgeConfirmationModal from './AgeConfirmationModal'; // Import the modal component
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+ 
   const cartItems = useSelector((state) => state.cart.items);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
   const getCustomerIdFromToken = () => {
     const token = localStorage.getItem('token');
@@ -42,7 +45,7 @@ const ProductCard = ({ product }) => {
     return Number(price).toLocaleString('en-KE');
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     const customer_id = getCustomerIdFromToken();
 
     if (!customer_id) {
@@ -51,25 +54,48 @@ const ProductCard = ({ product }) => {
       return;
     }
 
+    // Show loading toast
+    const loadingToastId = toast.loading('Adding to cart...');
+
     const existingItem = cartItems?.find(item => item.product_id === product.product_id);
 
-    if (existingItem) {
-      const updatedItemData = {
-        cart_item_id: existingItem.id,
-        quantity: existingItem.quantity + 1,
-      };
+    try {
+      if (existingItem) {
+        const updatedItemData = {
+          cart_item_id: existingItem.id,
+          quantity: existingItem.quantity + 1,
+        };
+        await dispatch(updateCartItem(updatedItemData)).unwrap();
+      } else {
+        const itemData = {
+          product_id: product.product_id,
+          product_name: product.product_name,
+          product_price: product.product_price,
+          quantity: 1,
+        };
+        await dispatch(addItemToCart({ customer_id, itemData })).unwrap();
+      }
 
-      dispatch(updateCartItem(updatedItemData));
-    } else {
-      const itemData = {
-        product_id: product.product_id,
-        product_name: product.product_name,
-        product_price: product.product_price,
-        quantity: 1,
-      };
-
-      dispatch(addItemToCart({ customer_id, itemData }));
+      // Notify success
+      toast.update(loadingToastId, { render: 'Added to cart!', type: 'success', isLoading: false, autoClose: 2000 });
+    } catch (error) {
+      console.error('Failed to add item to cart:', error);
+      // Notify failure
+      toast.update(loadingToastId, { render: 'Failed to add to cart!', type: 'error', isLoading: false, autoClose: 2000 });
     }
+  };
+
+  const handleAddToCartWithConfirmation = () => {
+    // Open modal for liquor category
+    if (product.category === 'LIQOUR') {
+      setIsModalOpen(true);
+    } else {
+      handleAddToCart(); // Directly add to cart for other categories
+    }
+  };
+
+  const confirmAge = () => {
+    handleAddToCart();
   };
 
   const renderStockStatus = () => {
@@ -126,8 +152,8 @@ const ProductCard = ({ product }) => {
 
       <button
         className={`text-white w-full p-2 rounded ${isPriceAvailable ? 'bg-teal-600' : 'bg-gray-400'}`}
-        onClick={isPriceAvailable ? handleAddToCart : undefined}
-        disabled={!isPriceAvailable}
+        onClick={isPriceAvailable ? handleAddToCartWithConfirmation : undefined}
+        disabled={!isPriceAvailable} // Disable if not available
       >
         {isPriceAvailable ? 'Add to cart' : 'Unavailable'}
       </button>
@@ -140,6 +166,13 @@ const ProductCard = ({ product }) => {
           <FaHeart size={20} />
         </button>
       </div>
+
+      {/* Age Confirmation Modal */}
+      <AgeConfirmationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onConfirm={confirmAge} 
+      />
     </div>
   );
 };

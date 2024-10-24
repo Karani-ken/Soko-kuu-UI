@@ -49,7 +49,7 @@ const Orders = () => {
     }, [navigate]);
 
     return (
-        <div className="container mx-auto px-2 sm:px-4 py-8">
+        <div className="container min-h-screen mx-auto px-2 sm:px-4 py-8">
             <h1 className="text-xl sm:text-2xl font-bold mb-6">Orders</h1>
 
             {loading ? (
@@ -79,10 +79,10 @@ const OrderCard = ({ orderData }) => {
 
     const navigateToTracker = () => {
         navigate('/track-order', { state: { order_status } }); // Passing the order status to the tracking page
-      };
+    };
 
     return (
-        <div className="bg-white shadow-md rounded-lg mb-6 p-4 sm:p-6">
+        <div className="bg-white min-h-screen shadow-md rounded-lg mb-6 p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-semibold mb-2">Order #{order_id}</h2>
             <button
                 className='text-white bg-blue-800 p-2 rounded-md hover:bg-blue-400'
@@ -92,7 +92,7 @@ const OrderCard = ({ orderData }) => {
             </button>
             <div className="sm:flex sm:justify-between mb-4">
                 <div>                  
-                    <p><strong>Status:</strong> <span className={`text-${order_status === 'Pending' ? 'yellow-500' : 'green-500'}`}>{order_status || 'pending'}</span></p>
+                    <p><strong>Status:</strong> <span className={`text-${order_status === 'Pending' ? 'yellow-500' : 'green-500'}`}>{order_status}</span></p>
                     <p><strong>Date Created:</strong> {new Date(date_created).toLocaleString()}</p>
                 </div>
                 <div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
@@ -15,7 +15,7 @@ const Login = () => {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
-        setIsLoading(true); // Start loading
+        setIsLoading(true);
 
         try {
             const response = await axios.post('https://api.kelynemedia.co.ke/customer/customers/login', {
@@ -23,23 +23,22 @@ const Login = () => {
                 password
             });
 
-            // Assuming the response contains the customer ID and a token
-            console.log(response.data);
             const token = response.data;
+            const expirationTime = new Date().getTime() + 12 * 60 * 60 * 1000; // 12 hours in milliseconds
 
-            // Store the token in localStorage
+            // Store the token and expiration time in localStorage
             localStorage.setItem('token', token);
+            localStorage.setItem('tokenExpiration', expirationTime);
 
-            // Display success message
-            setSuccessMessage('Login successful');            
+            setSuccessMessage('Login successful');
             setEmail('');
             setPassword('');
-            navigate('/')
-            window.location.reload()
+            navigate('/');
+            window.location.reload();
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to login.');
         } finally {
-            setIsLoading(false); // Stop loading
+            setIsLoading(false);
         }
     };
 
@@ -49,7 +48,7 @@ const Login = () => {
             {/* Modal Box */}
             <div className="bg-white shadow-lg rounded-lg border-2 px-8 py-6 w-full max-w-md relative z-50">
                 <h2 className="text-2xl font-bold mb-4 text-center text-blue-900 flex items-center justify-center">
-                   Sign in
+                    Sign in
                 </h2>
 
                 {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -127,11 +126,11 @@ const Login = () => {
                         )}
                     </button>
                     <div className="mt-4">
-                        <Link to='/signup'  className='text-blue-600 m-2'>Not yet a customer? Sign up.</Link> <br />
+                        <Link to='/signup' className='text-blue-600 m-2'>Not yet a customer? Sign up.</Link> <br />
                         <Link to='/password-reset' className='text-blue-400 m-2'>Forgot Password?</Link>
                     </div>
                 </form>
-               
+
             </div>
         </div>
     );

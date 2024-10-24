@@ -25,6 +25,9 @@ import CheckOut from './Components/CheckOut/CheckOut';
 import OrderSuccessPage from './Components/CheckOut/OrderSuccessPage';
 import Help from './Components/Help/Help';
 import GetApp from './Components/Help/GetApp';
+import AboutUs from './Components/Help/AboutUs';
+import PrivacyPolicy from './Components/Help/PrivacyPolicy';
+import TermsAndConditions from './Components/Help/TermsAndConditions';
 
 function App() {
 
@@ -56,6 +59,9 @@ function App() {
           <Route path='/order-success' element={<OrderSuccessPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/get-app" element={<GetApp />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
         </Routes>
         <Footer />
       </div>

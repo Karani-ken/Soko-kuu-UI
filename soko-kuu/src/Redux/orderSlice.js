@@ -24,6 +24,7 @@ export const createOrder = createAsyncThunk(
         return rejectWithValue('Order failed');
       }
     } catch (error) {
+      console.log(error)
       return rejectWithValue(error.response?.data || 'Error placing order');
     }
   }

@@ -137,7 +137,7 @@ const cartSlice = createSlice({
       .addCase(addItemToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.items.push(action.payload);
-        toast.success('Item added to cart!'); // Notify success
+        //toast.success('Item added to cart!'); // Notify success
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.loading = false;
@@ -158,7 +158,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.items = []; // Clear items in state when cart is cleared on the server
         state.totalPrice = 0;
-        toast.success('Cart cleared successfully!'); // Notify user
+         // Notify user
       })
       .addCase(clearCart.rejected, (state, action) => {
         state.loading = false;
@@ -167,7 +167,7 @@ const cartSlice = createSlice({
       })
       .addCase(removeCartItem.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.cart_item_id !== action.payload.cart_item_id);
-        toast.error('Item removed from cart!'); // Notify removal
+        toast.info('Item removed from cart!'); // Notify removal
       });
   },
 });

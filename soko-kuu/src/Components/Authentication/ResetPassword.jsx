@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { toast } from 'react-toastify';
 const ResetPassword = () => {
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
@@ -11,6 +12,7 @@ const ResetPassword = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate
 
     // Toggle Password Visibility
     const togglePasswordVisibility = () => {
@@ -27,7 +29,7 @@ const ResetPassword = () => {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
-        
+
         // Check if passwords match
         if (newPassword !== confirmPassword) {
             setError('Passwords do not match.');
@@ -53,7 +55,11 @@ const ResetPassword = () => {
             setOtp('');
             setNewPassword('');
             setConfirmPassword('');
+            toast.success("Password reset successful")
+            // Redirect to sign-in page on success
+            navigate('/signin'); // Redirect to the sign-in page
         } catch (err) {
+            toast.error("Password reset failed.")
             setError(err.response?.data?.message || 'Failed to reset password.');
         } finally {
             setIsLoading(false);

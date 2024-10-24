@@ -39,7 +39,7 @@ const GetApp = () => {
 
         {/* Amazon Appstore Link */}
         <a
-          href="https://www.amazon.com/soko-kuu" // Replace with your Amazon Appstore link
+          href=" https://www.amazon.com/dp/B0DJSS1DDP/ref=apps_sf_sta" // Replace with your Amazon Appstore link
           className="flex items-center justify-center bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition"
           target="_blank"
           rel="noopener noreferrer"

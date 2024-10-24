@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Logo from '../../assets/soko-kuu.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaShoppingCart, FaBars } from "react-icons/fa";
@@ -11,36 +11,49 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for the sidebar
-  const navigate = useNavigate()
-  // Toggle cart visibility, if user is not logged in, prompt login
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown
+  const navigate = useNavigate();
+
   const toggleCart = () => {
     if (isLoggedIn()) {
       setIsCartOpen(!isCartOpen);
     } else {
-      toggleLogin(); // Open login modal if not logged in
+      toggleLogin();
     }
   };
 
-  // Toggle login modal
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('https://api.kelynemedia.co.ke/categories/get-productcategories');
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const toggleLogin = () => {
     setIsLoginOpen(!isLoginOpen);
   };
 
-  // Toggle register modal
-  const toggleRegister = () => {
-    setIsRegisterOpen(!isRegisterOpen);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Toggle sidebar for small screens
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Handle switching from login to register
   const openRegister = () => {
-    toggleLogin(); // Close login
-    toggleRegister(); // Open register
+    toggleLogin();
+    toggleRegister();
   };
 
   const handleSearch = (e) => {
@@ -52,13 +65,32 @@ const Navbar = () => {
   };
 
   const handleNavigateToOrders = () => {
-    navigate('/orders')
-  }
+    navigate('/orders');
+  };
+
   const handleSignOut = () => {
     localStorage.removeItem('token');
-    navigate('/')
+    localStorage.removeItem('tokenExpiration');
+    navigate('/');
     window.location.reload();
   };
+
+  // Effect to close the dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    // Clean up the event listener on unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div>
@@ -95,7 +127,6 @@ const Navbar = () => {
 
       {/* Navbar */}
       <nav className='mt-1 flex flex-row justify-between items-center border rounded p-2 shadow-sm'>
-        {/* Logo */}
         <Link to='/'><img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0 object-contain' /></Link>
 
         {/* Search bar */}
@@ -127,8 +158,24 @@ const Navbar = () => {
           </button>
           <ul className='flex flex-col sm:flex-row justify-center sm:justify-end space-y-4 sm:space-y-0 sm:space-x-3 p-4 sm:p-0'>
             <li><Link to='/' className='m-2 font-medium text-sm sm:text-md'>Home</Link></li>
-            <li> <Link to='/help' className='m-2 font-medium text-sm sm:text-md'>Help Center</Link> </li>                     
-            <li> <Link to='/get-app' className='m-2 font-medium text-sm sm:text-md'>Get the App</Link> </li>
+            <li ref={dropdownRef} className='relative m-2 font-medium text-sm sm:text-md'>
+              <button onClick={toggleDropdown} className='focus:outline-none'>
+                Category
+              </button>
+              {isDropdownOpen && (
+                <div className='absolute z-10 bg-white text-white w-72 lg:w-96 border rounded-md shadow-lg mt-2'>
+                  <ul className='grid grid-cols-2 lg:grid-cols-3 overflow-y-auto'>
+                    {categories.map(category => (
+                      <li key={category.category_id} className='p-2 '>
+                        <Link to={`/category/${category.category_name}`} className='block text-black text-sm'>{category.category_name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+            <li><Link to='/help' className='m-2 font-medium text-sm sm:text-md'>Help Center</Link></li>
+            <li><Link to='/get-app' className='m-2 font-medium text-sm sm:text-md'>Get the App</Link></li>
             {isLoggedIn() && (
               <li><Link to='/profile' className='m-2 font-medium text-sm sm:text-md'>Profile</Link></li>
             )}
@@ -138,7 +185,7 @@ const Navbar = () => {
 
       {/* Cart, Login, and Register modals */}
       {isCartOpen && <Cart toggleCart={toggleCart} />}
-      {isLoginOpen && <Login toggleLogin={toggleLogin} openRegister={openRegister} />} {/* Pass openRegister */}
+      {isLoginOpen && <Login toggleLogin={toggleLogin} openRegister={openRegister} />}
 
     </div>
   );

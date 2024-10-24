@@ -7,10 +7,10 @@ const OrderTracking = () => {
   const { order_status } = location.state || {};
 
   const statuses = [
-    { name: 'Pending', icon: <FaHourglassStart />, color: 'bg-yellow-500' },
+    { name: 'Placed', icon: <FaHourglassStart />, color: 'bg-blue-500' },
     { name: 'Confirmed', icon: <FaCheckCircle />, color: 'bg-blue-500' },
-    { name: 'Pending Delivery', icon: <FaTruck />, color: 'bg-orange-500' },
-    { name: 'Delivered', icon: <FaBoxOpen />, color: 'bg-green-500' },
+    { name: 'Pending Delivery', icon: <FaTruck />, color: 'bg-blue-500' },
+    { name: 'Delivered', icon: <FaBoxOpen />, color: 'bg-blue-500' },
   ];
 
   const statusIndex = statuses.findIndex(status => status.name === order_status);
