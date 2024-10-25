@@ -37,6 +37,9 @@ const ProductPage = () => {
       return null;
     }
   };
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {

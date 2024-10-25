@@ -36,7 +36,7 @@ function App() {
     <Router>
       <div className='lg:mx-16 min-h-screen'>
         <Navbar />
-        <ToastContainer /> 
+        <ToastContainer position="top-right" /> 
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<ProfilePage />} />

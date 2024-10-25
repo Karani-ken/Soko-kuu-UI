@@ -50,7 +50,7 @@ const GetApp = () => {
 
         {/* APK Download Link */}
         <a
-          href="/path/to/your/app.apk" // Replace with the path to your APK file
+          href="https://soko-kuu.nyc3.cdn.digitaloceanspaces.com/soko-kuu-app/Soko-Kuu.apk" // Replace with the path to your APK file
           className="flex items-center justify-center bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition"
           download // This attribute suggests downloading the file
         >
