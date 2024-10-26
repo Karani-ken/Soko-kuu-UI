@@ -74,7 +74,7 @@ const LandingPage = () => {
         {/* Product Image with Overlay */}
         <div className='w-full flex items-center justify-center relative'>
           <img
-            src={currentProduct.product_images ? JSON.parse(currentProduct.product_images)[0] : ''}
+            src={currentProduct?.product_images ? JSON.parse(currentProduct?.product_images)[0] : ''}
             alt={currentProduct.product_name}
             className='w-full h-[55vh] lg:h-[70vh] object-fill rounded'
           />          

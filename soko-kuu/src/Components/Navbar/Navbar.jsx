@@ -10,13 +10,12 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [fastFoodProducts, setFastFoodProducts] = useState([]);
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
-  const dropdownRef = useRef(null); 
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleCart = () => {
@@ -53,14 +52,13 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // Set up interval to display products one by one with a 5-second delay
     const intervalId = setInterval(() => {
       setCurrentProductIndex((prevIndex) => 
         (prevIndex + 1) % fastFoodProducts.length
       );
     }, 5000);
 
-    return () => clearInterval(intervalId); // Clean up on component unmount
+    return () => clearInterval(intervalId);
   }, [fastFoodProducts]);
 
   const toggleLogin = () => {
@@ -71,17 +69,32 @@ const Navbar = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const closeDropdown = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", closeDropdown);
+    return () => {
+      document.removeEventListener("mousedown", closeDropdown);
+    };
+  }, []);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const openRegister = () => {
-    toggleLogin();
-    toggleRegister();
-  };
-
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search/${searchTerm}`);
+    }
   };
 
   const isLoggedIn = () => {
@@ -151,7 +164,7 @@ const Navbar = () => {
         <Link to='/'><img src={Logo} alt="logo" className='w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-0 object-contain' /></Link>
 
         {/* Search bar */}
-        <div className='flex w-full sm:w-auto items-center space-x-2 mb-2 mx-1 sm:mb-0'>
+        <form onSubmit={handleSearchSubmit} className='flex w-full sm:w-auto items-center space-x-2 mb-2 mx-1 sm:mb-0'>
           <input
             type="text"
             placeholder='Search...'
@@ -159,10 +172,10 @@ const Navbar = () => {
             onChange={handleSearch}
             className='border-2 border-slate-400 w-full sm:w-80 p-1 rounded'
           />
-          <button className='p-1 font-medium rounded bg-blue-900 text-white'>
+          <button type='submit' className='p-1 font-medium rounded bg-blue-900 text-white'>
             Search
           </button>
-        </div>
+        </form>
 
         {/* Hamburger icon for sidebar */}
         <button onClick={toggleSidebar} className='sm:hidden text-3xl p-2'>
@@ -207,7 +220,6 @@ const Navbar = () => {
       {/* Cart, Login, and Register modals */}
       {isCartOpen && <Cart toggleCart={toggleCart} />}
       {isLoginOpen && <Login toggleLogin={toggleLogin} openRegister={openRegister} />}
-
     </div>
   );
 };
