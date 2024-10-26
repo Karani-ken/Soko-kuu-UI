@@ -37,10 +37,10 @@ const ResetPassword = () => {
         }
 
         // Check password complexity
-        if (!validatePassword(newPassword)) {
+       /* if (!validatePassword(newPassword)) {
             setError('Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.');
             return;
-        }
+        }*/
 
         setIsLoading(true);
 

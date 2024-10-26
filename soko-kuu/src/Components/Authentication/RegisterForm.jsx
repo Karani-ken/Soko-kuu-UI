@@ -49,11 +49,11 @@ const RegisterForm = () => {
       return;
     }
 
-    if (!passwordComplexity(password)) {
+    /*if (!passwordComplexity(password)) {
       setError("Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters.");
       setIsLoading(false);
       return;
-    }
+    }*/
 
     try {
       const response = await axios.post('https://api.kelynemedia.co.ke/customer/register', {
@@ -158,7 +158,7 @@ const RegisterForm = () => {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              <p className="text-gray-500 text-xs mt-1">Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters.</p>
+             
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">

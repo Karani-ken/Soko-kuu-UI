@@ -14,7 +14,9 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null); // Create a ref for the dropdown
+  const [fastFoodProducts, setFastFoodProducts] = useState([]);
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const dropdownRef = useRef(null); 
   const navigate = useNavigate();
 
   const toggleCart = () => {
@@ -35,9 +37,31 @@ const Navbar = () => {
     }
   };
 
+  const fetchFastFoodProducts = async () => {
+    try {
+      const response = await fetch('https://api.kelynemedia.co.ke/products/category/Fast Food');
+      const data = await response.json();
+      setFastFoodProducts(data);
+    } catch (error) {
+      console.error('Error fetching Fast Food products:', error);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
+    fetchFastFoodProducts();
   }, []);
+
+  useEffect(() => {
+    // Set up interval to display products one by one with a 5-second delay
+    const intervalId = setInterval(() => {
+      setCurrentProductIndex((prevIndex) => 
+        (prevIndex + 1) % fastFoodProducts.length
+      );
+    }, 5000);
+
+    return () => clearInterval(intervalId); // Clean up on component unmount
+  }, [fastFoodProducts]);
 
   const toggleLogin = () => {
     setIsLoginOpen(!isLoginOpen);
@@ -75,30 +99,27 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  // Effect to close the dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    
-    // Clean up the event listener on unmount
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const currentProduct = fastFoodProducts[currentProductIndex];
 
   return (
     <div>
       {/* Header */}
       <header className='bg-blue-900 text-white md:flex justify-between p-2 text-center rounded-sm'>
-        <h1 className='font-medium text-sm text-center sm:text-base md:text-lg lg:text-xl'>
-          Get Amazing deals at Soko-Kuu
-        </h1>
+        {currentProduct ? (
+          <div className='flex flex-col bg-red-700 min-w-52 rounded-md p-1 items-center text-center'>
+            <h1 className='font-bold text-lg'>{currentProduct.product_name}</h1>
+            <p className='text-sm mb-2'><sup>Kes</sup> {currentProduct.product_price}</p>
+            <button 
+              onClick={() => navigate(`/products/${currentProduct.product_id}`)}
+              className='bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded'
+            >
+              Order Now
+            </button>
+          </div>
+        ) : (
+          <h1 className='font-medium text-lg'>Loading...</h1>
+        )}
+        
         <div className='flex justify-between md:justify-end lg:justify-end bg-blue-400 md:bg-blue-900 lg:bg-blue-900 rounded'>
           {isLoggedIn() && (
             <>
@@ -138,9 +159,9 @@ const Navbar = () => {
             onChange={handleSearch}
             className='border-2 border-slate-400 w-full sm:w-80 p-1 rounded'
           />
-          <Link to={`/search/${searchTerm}`} className='p-1 font-medium rounded bg-blue-900 text-white'>
+          <button className='p-1 font-medium rounded bg-blue-900 text-white'>
             Search
-          </Link>
+          </button>
         </div>
 
         {/* Hamburger icon for sidebar */}

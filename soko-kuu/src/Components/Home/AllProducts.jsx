@@ -9,18 +9,20 @@ export const AllProducts = () => {
   const [expandedCategories, setExpandedCategories] = useState({}); // State to track expanded categories
 
   // Array of prioritized categories
-  const prioritizedCategories = [    
+  const prioritizedCategories = [   
+    'Food', 
     'Phones and Accessories',
     'Tech Solutions',
     'Beauty Products',
     'Kitchen Appliances',
     'Home Appliances',
-    'Electrical and Electronics',
-    'Food',
+    'Electrical and Electronics',    
     'Drinks',
     'Beverages',
     'Spices',
-  ];
+    'bedding',
+    'Fashion'
+   ];
 
   // Fetch all products from the API
   const fetchProducts = async () => {

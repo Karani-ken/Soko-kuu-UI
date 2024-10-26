@@ -68,7 +68,7 @@ const LandingPage = () => {
   const currentProduct = products[currentIndex];
 
   return (
-    <div className='h-[70vh] bg-white flex mb-2 items-center cursor-pointer justify-center relative w-full' 
+    <div className='h-[55vh] lg:h-[70vh] bg-white flex mb-2 items-center cursor-pointer justify-center relative w-full' 
          onClick={() => handleNavigate(currentProduct.product_id)} >
       <div className='relative w-full flex flex-col md:flex-row bg-sky-200'>
         {/* Product Image with Overlay */}
@@ -76,7 +76,7 @@ const LandingPage = () => {
           <img
             src={currentProduct.product_images ? JSON.parse(currentProduct.product_images)[0] : ''}
             alt={currentProduct.product_name}
-            className='w-full h-[70vh] object-fill rounded'
+            className='w-full h-[55vh] lg:h-[70vh] object-fill rounded'
           />          
         </div>
       </div>

@@ -6,7 +6,7 @@ const AgeConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white text-black p-8 shadow-lg rounded-lg w-1/2">
+      <div className="bg-white text-black md:p-8 shadow-lg rounded-lg w-full lg:w-1/2">
         <p className="mt-2 text-xl font-bold text-center">
           <FaCheckCircle className="inline mr-2 text-green-600" />
           Hello there, please confirm that you are over 18 to proceed.
@@ -14,7 +14,7 @@ const AgeConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
         
         <div className="mt-6 flex justify-center space-x-4">
           <button
-            className="bg-blue-900 text-white flex items-center px-6 py-3 rounded-lg transition duration-200 hover:bg-blue-800"
+            className="bg-blue-900 text-white flex items-center p-2 md:px-6 py-3 rounded-lg transition duration-200 hover:bg-blue-800"
             onClick={() => {
               onConfirm();
               onClose();
@@ -24,7 +24,7 @@ const AgeConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
             Yes, I'm 18!
           </button>
           <button
-            className="bg-gray-600 text-white flex items-center px-6 py-3 rounded-lg transition duration-200 hover:bg-gray-500"
+            className="bg-gray-600 text-white flex items-center p-2 md:px-6 py-3 rounded-lg transition duration-200 hover:bg-gray-500"
             onClick={onClose}
           >
             <FaTimesCircle className="mr-2" />
